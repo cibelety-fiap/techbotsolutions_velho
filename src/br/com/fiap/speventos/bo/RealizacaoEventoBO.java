@@ -18,7 +18,7 @@ import br.com.fiap.speventos.dao.RealizacaoEventoDAO;
 public class RealizacaoEventoBO {
 
 	/**
-	 * M�todo respons�vel por manipular as regras relacionadas ao Cliente
+	 * Método para manipular regras relacionadas à RealizacaoEvento
 	 * Regras de Neg�cio validadas:
 	 * Quantidade de estrelas do cliente,
 	 * Tamanho do nome do cliente, 
@@ -31,12 +31,9 @@ public class RealizacaoEventoBO {
 	
 	
 	public String novaRealizacaoEvento(RealizacaoEvento realizacaoEvento) throws Exception {
-		// Regras de negocio
 
-		// Validacao
-
-		// Padronizacao
-
+		// FAZER AS RNs, VALIDACOES E PADRONIZACOES
+		
 		RealizacaoEventoDAO dao = new RealizacaoEventoDAO();
 
 		RealizacaoEvento realizacaoEventoCodRepetido = dao
@@ -62,6 +59,8 @@ public class RealizacaoEventoBO {
 
 	public RealizacaoEvento consultaEventoPorCodigo(int codRealizEvento) throws Exception {
 
+		// FAZER AS RNs, VALIDACOES E PADRONIZACOES
+		
 		RealizacaoEventoDAO dao = new RealizacaoEventoDAO();
 
 			RealizacaoEvento retorno = dao.consultarPorCodigo(codRealizEvento);
@@ -71,6 +70,9 @@ public class RealizacaoEventoBO {
 	}
 
 	public List<RealizacaoEvento> consultaEventoPorNomeEvento(String nomeEvento) throws Exception {
+
+		// FAZER AS RNs, VALIDACOES E PADRONIZACOES
+		
 		RealizacaoEventoDAO dao = new RealizacaoEventoDAO();
 
 			List<RealizacaoEvento> listaRealizEvento = dao.consultarPorNomeEvento(nomeEvento);
@@ -80,6 +82,9 @@ public class RealizacaoEventoBO {
 	}
 
 	public String edicaoRealizacaoEvento(RealizacaoEvento realizacaoEvento, int codRealizEvento) throws Exception {
+
+		// FAZER AS RNs, VALIDACOES E PADRONIZACOES
+		
 		RealizacaoEventoDAO dao = new RealizacaoEventoDAO();
 
 		String retorno = null;
@@ -91,6 +96,9 @@ public class RealizacaoEventoBO {
 	}
 
 	public String remocaoRealizacaoEvento(int codRealizEvento) throws Exception {
+
+		// FAZER AS RNs, VALIDACOES E PADRONIZACOES
+		
 		RealizacaoEventoDAO dao = new RealizacaoEventoDAO();
 		
 		String retorno = null;
