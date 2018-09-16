@@ -38,7 +38,7 @@ public class LocalBO {
 		
 		List<Local> listaLocal = new ArrayList<Local>();
 		
-		stmt
+testando
 		
 	}
 	
