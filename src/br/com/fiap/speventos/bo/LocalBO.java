@@ -1,6 +1,5 @@
 package br.com.fiap.speventos.bo;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import br.com.fiap.speventos.beans.Local;
@@ -9,11 +8,7 @@ import br.com.fiap.speventos.dao.LocalDAO;
 public class LocalBO {
 
 
-/*	private int codigoLocal;
-	private String nomeLocal;
-	private String enderecoLocal;
-*/
-	public String novoLocal(Local local) throws Exception {
+	public static String novoLocal(Local local) throws Exception {
 		
 		
 		LocalDAO dao = new LocalDAO();
@@ -35,12 +30,29 @@ public class LocalBO {
 	}
 	
 	public List<Local> consultaLocalPorNome(String nomeLocal) throws Exception {
+				
+		LocalDAO dao = new LocalDAO();
 		
-		List<Local> listaLocal = new ArrayList<Local>();
-		
-testando
+		return dao.consultarPorNome(nomeLocal);
 		
 	}
 	
-
+	public String edicaoLocal(Local local) throws Exception {
+		
+		LocalDAO dao = new LocalDAO();
+		
+		int retorno = dao.editar(local);
+		dao.fechar();
+		
+		return retorno + "registro editado";
+	}
+	
+	public String remocaoLocal(int codLocal) throws Exception {
+		LocalDAO dao = new LocalDAO();
+		
+		int retorno = dao.remover(codLocal);
+		dao.fechar();
+		
+		return retorno + "registro removido";
+	}
 }

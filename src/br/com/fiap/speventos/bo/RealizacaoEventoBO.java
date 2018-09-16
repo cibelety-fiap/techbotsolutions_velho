@@ -5,8 +5,31 @@ import java.util.List;
 import br.com.fiap.speventos.beans.RealizacaoEvento;
 import br.com.fiap.speventos.dao.RealizacaoEventoDAO;
 
+
+/**
+ *  Classe para validar dados para a tabela T_DDD_Cliente
+ *  @version 1.0
+ *  @since 1.0
+ *  @author Cibele Takaoka Yamamoto
+ *  @see ClienteDAO
+ *  @see Cliente
+ */
+
 public class RealizacaoEventoBO {
 
+	/**
+	 * M�todo respons�vel por manipular as regras relacionadas ao Cliente
+	 * Regras de Neg�cio validadas:
+	 * Quantidade de estrelas do cliente,
+	 * Tamanho do nome do cliente, 
+	 * se o n�mero do c liente informado.
+	 * @author Cibele Takaoka Yamamoto
+	 * @param cli
+	 * @return
+	 * @throws Exception
+	 */
+	
+	
 	public String novaRealizacaoEvento(RealizacaoEvento realizacaoEvento) throws Exception {
 		// Regras de negocio
 
@@ -61,7 +84,7 @@ public class RealizacaoEventoBO {
 
 		String retorno = null;
 
-			retorno = dao.editar(realizacaoEvento) + "registro(s) editados";
+			retorno = dao.editar(realizacaoEvento) + "registro editado";
 
 		dao.fechar();
 		return retorno;
@@ -72,7 +95,7 @@ public class RealizacaoEventoBO {
 		
 		String retorno = null;
 
-			retorno = dao.remover(codRealizEvento) + "registros removidos";
+			retorno = dao.remover(codRealizEvento) + "registro removido";
 		
 		dao.fechar();
 		return retorno;

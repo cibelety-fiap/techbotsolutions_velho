@@ -12,14 +12,21 @@ import br.com.fiap.speventos.beans.RealizacaoEvento;
 import br.com.fiap.speventos.conexao.Conexao;
 
 /**
- * Esta classe manipula a tabela T_SGE_REALIZACAO_EVENTO possui metodos para:
- * cadastrar, consultarPorCodigo, consultarPorCodigoEvento, editar, remover
- * 
+ * Esta classe manipula a tabela T_SGE_REALIZACAO_EVENTO 
+ * possui metodos para: cadastrar, consultarPorCodigo, consultarPorNomeEvento, editar, remover
  * @author Techbot Solutions
  * @version 1.0
  * @since 1.0
  * @see RealizacaoEventoBO
  * @see RealizacaoEventoBeans
+ */
+
+/**
+ * Neste m�todo construtor, estabelecemos a comunica��o com o banco
+ * @author Cibele Takaoka Yamamoto
+ * @param n�o possui par�metros
+ * @return n�o h� retorno
+ * @throws Exception Chamada da exce��o checked SQLException
  */
 
 public class RealizacaoEventoDAO {
@@ -32,6 +39,14 @@ public class RealizacaoEventoDAO {
 		con = new Conexao().conectar();
 	}
 
+	
+	/**
+	 * Este m�todo respons�vel por adicionar uma linha na tabela T_DDD_CLIENTE
+	 * @param cli Recebe um objeto do tipo Cliente Beans
+	 * @return Uma string com a mensagem de confirma��o
+	 * @throws Exception Chamada da exce��o checked
+	 * @author Cibele Takaoka Yamamoto
+	 */
 	public String cadastrar(RealizacaoEvento realizacaoEvento) throws Exception {
 		stmt = con.prepareStatement("INSERT INTO T_SGE_REALIZACAO_EVENTO "
 				+ "(CD_REALIZ_EVENTO, CD_EVENTO, CD_LOCAL, DT_HR_INICIO, DT_HR_TERMINO " + "VALUES (?,?,?,?,?)");
