@@ -7,10 +7,10 @@ import br.com.fiap.speventos.dao.RealizacaoEventoDAO;
 
 
 /**
- *  Classe para validar dados para a tabela T_DDD_Cliente
+ *  Classe para validar e padronizar dados para a tabela T_DDD_Cliente
  *  @version 1.0
  *  @since 1.0
- *  @author Cibele Takaoka Yamamoto
+ *  @author Techbot Solutions
  *  @see ClienteDAO
  *  @see Cliente
  */
@@ -53,7 +53,7 @@ public class RealizacaoEventoBO {
 
 		if ((localValido.equals("OK") || localValido.equals(null))
 				&& (eventoValido.equals("OK") || eventoValido.equals(null))) {
-			retorno = dao.cadastrar(realizacaoEvento);
+			retorno = dao.cadastrar(realizacaoEvento) + "registro inserido";
 		}
 
 		dao.fechar();
@@ -73,10 +73,10 @@ public class RealizacaoEventoBO {
 	public List<RealizacaoEvento> consultaEventoPorNomeEvento(String nomeEvento) throws Exception {
 		RealizacaoEventoDAO dao = new RealizacaoEventoDAO();
 
-			List<RealizacaoEvento> retorno = dao.consultarPorNomeEvento(nomeEvento);
+			List<RealizacaoEvento> listaRealizEvento = dao.consultarPorNomeEvento(nomeEvento);
 
 		dao.fechar();
-		return retorno;
+		return listaRealizEvento;
 	}
 
 	public String edicaoRealizacaoEvento(RealizacaoEvento realizacaoEvento, int codRealizEvento) throws Exception {

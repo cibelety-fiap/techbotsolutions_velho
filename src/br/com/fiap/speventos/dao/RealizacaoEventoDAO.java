@@ -12,21 +12,13 @@ import br.com.fiap.speventos.beans.RealizacaoEvento;
 import br.com.fiap.speventos.conexao.Conexao;
 
 /**
- * Esta classe manipula a tabela T_SGE_REALIZACAO_EVENTO 
- * possui metodos para: cadastrar, consultarPorCodigo, consultarPorNomeEvento, editar, remover
+ * Classe para manipular a tabela T_SGE_REALIZACAO_EVENTO 
+ * Possui métodos para: cadastrar, consultarPorCodigo, consultarPorNomeEvento, editar, remover
  * @author Techbot Solutions
  * @version 1.0
  * @since 1.0
  * @see RealizacaoEventoBO
- * @see RealizacaoEventoBeans
- */
-
-/**
- * Neste m�todo construtor, estabelecemos a comunica��o com o banco
- * @author Cibele Takaoka Yamamoto
- * @param n�o possui par�metros
- * @return n�o h� retorno
- * @throws Exception Chamada da exce��o checked SQLException
+ * @see RealizacaoEvento
  */
 
 public class RealizacaoEventoDAO {
@@ -35,19 +27,25 @@ public class RealizacaoEventoDAO {
 	private PreparedStatement stmt;
 	private ResultSet rs;
 
+	/**
+	 * Método construtor que estabelece a comunicação com o banco de dados
+	 * @author Techbot Solutions
+	 * @param não possui parâmetros
+	 * @return não há retorno
+	 * @throws Exception Chamada da exceção checked SQLException
+	 */
 	public RealizacaoEventoDAO() throws Exception {
 		con = new Conexao().conectar();
 	}
 
-	
 	/**
-	 * Este m�todo respons�vel por adicionar uma linha na tabela T_DDD_CLIENTE
-	 * @param cli Recebe um objeto do tipo Cliente Beans
-	 * @return Uma string com a mensagem de confirma��o
-	 * @throws Exception Chamada da exce��o checked
-	 * @author Cibele Takaoka Yamamoto
+	 * Método para adicionar um registro na tabela T_DDD_CLIENTE
+	 * @author Techbot Solutions
+	 * @param realizacaoEvento recebe um objeto do tipo RealizacaoEvento (Beans)
+	 * @return um int com a quantidade de registros inseridos
+	 * @throws Exception Chamada da exceção Exception (completar??)
 	 */
-	public String cadastrar(RealizacaoEvento realizacaoEvento) throws Exception {
+	public int cadastrar(RealizacaoEvento realizacaoEvento) throws Exception {
 		stmt = con.prepareStatement("INSERT INTO T_SGE_REALIZACAO_EVENTO "
 				+ "(CD_REALIZ_EVENTO, CD_EVENTO, CD_LOCAL, DT_HR_INICIO, DT_HR_TERMINO " + "VALUES (?,?,?,?,?)");
 
@@ -57,9 +55,9 @@ public class RealizacaoEventoDAO {
 		stmt.setDate(4, realizacaoEvento.getDataHoraInicio());
 		stmt.setDate(5, realizacaoEvento.getDataHoraTermino());
 
-		stmt.executeUpdate();
+		
 
-		return "Cadastrado com sucesso!";
+		return stmt.executeUpdate();
 	}
 
 	public RealizacaoEvento consultarPorCodigo(int codRealizEvento) throws Exception {

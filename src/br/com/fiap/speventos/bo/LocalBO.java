@@ -10,6 +10,7 @@ public class LocalBO {
 
 	public static String novoLocal(Local local) throws Exception {
 		
+		// FAZER AS RNs, VALIDACOES E PADRONIZACOES
 		
 		LocalDAO dao = new LocalDAO();
 		
@@ -21,6 +22,8 @@ public class LocalBO {
 	
 	public Local consultaLocalPorCodigo(int codLocal) throws Exception {
 		
+		// FAZER AS RNs, VALIDACOES E PADRONIZACOES
+		
 		LocalDAO dao = new LocalDAO();
 		
 		Local retorno = dao.consultarPorCodigo(codLocal);
@@ -30,14 +33,22 @@ public class LocalBO {
 	}
 	
 	public List<Local> consultaLocalPorNome(String nomeLocal) throws Exception {
-				
+		
+		// FAZER AS RNs, VALIDACOES E PADRONIZACOES
+
+		
 		LocalDAO dao = new LocalDAO();
 		
-		return dao.consultarPorNome(nomeLocal);
+		List<Local> listaLocal = dao.consultarPorNome(nomeLocal);
+		dao.fechar();
+		
+		return listaLocal; 
 		
 	}
 	
 	public String edicaoLocal(Local local) throws Exception {
+		
+		// FAZER AS RNs, VALIDACOES E PADRONIZACOES
 		
 		LocalDAO dao = new LocalDAO();
 		
@@ -48,6 +59,9 @@ public class LocalBO {
 	}
 	
 	public String remocaoLocal(int codLocal) throws Exception {
+		
+		// FAZER AS RNs, VALIDACOES E PADRONIZACOES
+		
 		LocalDAO dao = new LocalDAO();
 		
 		int retorno = dao.remover(codLocal);
