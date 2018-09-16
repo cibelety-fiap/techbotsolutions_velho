@@ -32,7 +32,7 @@ public class RealizacaoEventoDAO {
 	 * @author Techbot Solutions
 	 * @param não possui parâmetros
 	 * @return não há retorno
-	 * @throws Exception Chamada da exceção checked SQLException
+	 * @throws Exception - Chamada da exceção checked SQLException
 	 */
 	public RealizacaoEventoDAO() throws Exception {
 		con = new Conexao().conectar();

@@ -7,7 +7,7 @@ import br.com.fiap.speventos.dao.RealizacaoEventoDAO;
 
 
 /**
- *  Classe para validar e padronizar dados para a tabela T_DDD_Cliente
+ *  Classe para validar e padronizar dados para a tabela T_DDD_Realizacao_Evento
  *  @version 1.0
  *  @since 1.0
  *  @author Techbot Solutions
@@ -18,18 +18,15 @@ import br.com.fiap.speventos.dao.RealizacaoEventoDAO;
 public class RealizacaoEventoBO {
 
 	/**
-	 * Método para manipular regras relacionadas à RealizacaoEvento
-	 * Regras de Neg�cio validadas:
-	 * Quantidade de estrelas do cliente,
-	 * Tamanho do nome do cliente, 
-	 * se o n�mero do c liente informado.
-	 * @author Cibele Takaoka Yamamoto
-	 * @param cli
-	 * @return
-	 * @throws Exception
+	 * Método para verificar regras de negócio, validação e padronização 
+	 * relacionadas à inserção de uma nova RealizacaoEvento 
+	 * Regras de negócio validadas:
+	 * tamanho do nome do evento (etc)
+	 * @author Techbot Solutions
+	 * @param realizacaoEvento recebe um objeto do tipo RealizacaoEvento (Beans)
+	 * @return uma String com a quantidade de registros inseridos ou o erro ocorrido
+	 * @throws Exception - Chamada da exceção checked SQLException (???)
 	 */
-	
-	
 	public String novaRealizacaoEvento(RealizacaoEvento realizacaoEvento) throws Exception {
 
 		// FAZER AS RNs, VALIDACOES E PADRONIZACOES
