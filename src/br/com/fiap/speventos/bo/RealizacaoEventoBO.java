@@ -7,7 +7,7 @@ import br.com.fiap.speventos.dao.RealizacaoEventoDAO;
 
 
 /**
- *  Classe para validar e padronizar dados para a tabela T_DDD_Realizacao_Evento
+ *  Classe para validar e padronizar dados para a tabela T_SGE_REALIZACAO_EVENTO
  *  @version 1.0
  *  @since 1.0
  *  @author Techbot Solutions
@@ -18,7 +18,7 @@ import br.com.fiap.speventos.dao.RealizacaoEventoDAO;
 public class RealizacaoEventoBO {
 
 	/**
-	 * Método para verificar regras de negócio, validação e padronização 
+	 * Método para verificar regras de negócio, validações e padronizações 
 	 * relacionadas à inserção de uma nova RealizacaoEvento 
 	 * Regras de negócio validadas:
 	 * tamanho do nome do evento (etc)
