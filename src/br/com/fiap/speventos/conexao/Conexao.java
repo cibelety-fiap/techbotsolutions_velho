@@ -9,6 +9,6 @@ public class Conexao {
 
 	public Connection conectar() throws Exception {
 		return DriverManager.getConnection
-				(url,"RM80951", "130186");
+				(url,"rm80951", "130186");
 	}
 }

@@ -8,6 +8,7 @@ import br.com.fiap.speventos.beans.Usuario2;
 import br.com.fiap.speventos.conexao.Conexao;
 
 public class UsuarioDAO2 {
+	
 	private Connection con;
 	private PreparedStatement stmt;
 	private ResultSet rs;

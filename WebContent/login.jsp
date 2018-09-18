@@ -55,8 +55,6 @@
         </div>
         <a href="javascript:void(0); " style="font-size:15px; " class="icon " onclick="myFunction() ">&#9776;</a>
       </div>
-
-      <body>
         <article style="float: left;">
           <form id="login" action="Login" method="POST" > <!-- alterar -->
             <label>Login:</label>
@@ -92,27 +90,6 @@
         <footer>Copyright &copy; 2018 SP Eventos </footer>
     </div>
 <!--  remover javascript -->
-    <script>
-    
-function Login() {
-  var done = 0;
-  var usuario = document.getElementsByName('usuario')[0].value;
-  usuario = usuario.toLowerCase();
-  var senha = document.getElementsByName('senha')[0].value;
-  senha = senha.toLowerCase();
-  if (usuario == 'admin' && senha == 'admin') {
-    window.location = 'tela_adm.html';
-    done = 1;
-  }
-  if (usuario == 'user' && senha == 'user') {
-    window.location = 'tela_usuario.html';
-    done = 1;
-  }
-  if (done == 0) {
-    alert('Dados incorretos, tente novamente');
-  }
-}
-    </script>
 
     </body>
 
