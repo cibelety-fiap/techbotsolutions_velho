@@ -80,14 +80,13 @@ public class MessageServlet extends HttpServlet {
 			}
 		}
 
-		if (!nomeIntent.isEmpty() && !tipo_filme.isEmpty() && !dia.isEmpty() && !horario.isEmpty()) {
+		if (nomeIntent.equals("CINEMA") && !tipo_filme.isEmpty() && !dia.isEmpty() && !horario.isEmpty()) {
 
 			try {
 				ChatDAO dao = new ChatDAO();
 				
-				String data_hora = dia + " " + horario;
-				System.out.println(nomeIntent + " " + tipo_filme + " " + data_hora);
-				List<RespostaChatbot> respostas = dao.consultar(nomeIntent, tipo_filme, data_hora);
+				System.out.println(nomeIntent + " " + tipo_filme + " " + dia + " " + horario);
+				List<RespostaChatbot> respostas = dao.consultar(nomeIntent, tipo_filme, dia + " " + horario);
 				for (RespostaChatbot resposta : respostas) {
 					System.out.println(resposta.getAll());
 				}
@@ -118,8 +117,11 @@ public class MessageServlet extends HttpServlet {
 
 		MessageOptions newMessageOptions = new MessageOptions.Builder().workspaceId(workspaceId)
 				.input(new InputData.Builder(input).build()).context(context).build();
+		//Imprimir para visualizar o que esta sendo enviado para o chatbot tratar e responder
+		//System.out.println(newMessageOptions);
+		
 		MessageResponse response = service.message(newMessageOptions).execute();
-		 System.out.println(newMessageOptions);
+
 		return response;
 	}
 }
