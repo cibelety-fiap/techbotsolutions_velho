@@ -1,6 +1,7 @@
 package br.com.fiap.speventos.web;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -21,23 +22,30 @@ public class Login extends HttpServlet {
 			throws ServletException, IOException {
 		try {
 
+//			PrintWriter writer = response.getWriter();
+
 			String email = request.getParameter("email");
 			String senha = request.getParameter("senha");
 
 			UsuarioBO2 bo = new UsuarioBO2();
 			Usuario2 usuario = bo.login(email, senha);
 
-			request.setAttribute(usuario.getEmail(), "email");
-			request.setAttribute(usuario.getNome(), "nome");
-
-			RequestDispatcher dispatcher = request.getRequestDispatcher("loginResp.jsp");
-			dispatcher.forward(request, response);
-
+			if (usuario.getEmail() == null) {
+				RequestDispatcher dispatcher = request.getRequestDispatcher("loginErro.jsp");
+				dispatcher.forward(request, response);
+			} else {
+				request.setAttribute("usuario", usuario);
+				
+				// if(usuario.instanceOf(UsuarioPF) {				
+					RequestDispatcher dispatcher = request.getRequestDispatcher("loginColaborador.jsp");
+				// } else {
+				//	RequestDispatcher dispatcher = request.getRequestDispatcher("loginUsuario.jsp");	
+				// }
+					dispatcher.forward(request, response);
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.out.println(Excecao.tratarExcecao(e));
 		}
-
 	}
-
 }

@@ -58,7 +58,9 @@
       </div>
         <article style="float:right;padding-right: 30%;">
           <p>
-           ${nome}
+           Olá, ${usuario.nome}.
+           
+           Bem vindo(a) ao nosso site!
           </p>
         </article>
         <footer>Copyright &copy; 2018 SP Eventos </footer>
