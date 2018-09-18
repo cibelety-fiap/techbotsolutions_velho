@@ -30,7 +30,7 @@ public class Login extends HttpServlet {
 			request.setAttribute(usuario.getEmail(), "email");
 			request.setAttribute(usuario.getNome(), "nome");
 
-			RequestDispatcher dispatcher = request.getRequestDispatcher("loginResultado.jsp");
+			RequestDispatcher dispatcher = request.getRequestDispatcher("loginResp.jsp");
 			dispatcher.forward(request, response);
 
 		} catch (Exception e) {

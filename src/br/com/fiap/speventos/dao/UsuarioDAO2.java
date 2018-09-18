@@ -18,7 +18,7 @@ public class UsuarioDAO2 {
 	}
 	
 	public Usuario2 logar(String email, String senha) throws Exception {
-		stmt = con.prepareStatement("SELECT DS_EMAIL, DS_SENHA, NM_USUARIO, FROM T_SGE_USUARIO "
+		stmt = con.prepareStatement("SELECT DS_EMAIL, DS_SENHA, NM_PESSOA FROM T_SGE_USUARIO "
 				+ "WHERE DS_EMAIL=? AND DS_SENHA=?");
 		
 		stmt.setString(1, email);
@@ -29,7 +29,7 @@ public class UsuarioDAO2 {
 		if(rs.next()) {
 			return new Usuario2(rs.getString("DS_EMAIL"),
 					rs.getString("DS_SENHA"),
-					rs.getString("NM_USUARIO")
+					rs.getString("NM_PESSOA")
 					);
 		}
 		
