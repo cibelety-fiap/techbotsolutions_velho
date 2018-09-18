@@ -35,7 +35,7 @@ public class Login extends HttpServlet {
 				dispatcher.forward(request, response);
 			} else {
 				request.setAttribute("usuario", usuario);
-				
+			
 				// if(usuario.instanceOf(UsuarioPF) {				
 					RequestDispatcher dispatcher = request.getRequestDispatcher("loginColaborador.jsp");
 				// } else {
