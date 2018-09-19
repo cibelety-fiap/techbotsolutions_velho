@@ -44,7 +44,7 @@ public class UsuarioBO {
 		return "";
 	}
 	
-	public Usuario login(String email, String senha) throws Exception{
+	public static Usuario login(String email, String senha) throws Exception{
 		
 		//RNs, validacoes, etc
 		

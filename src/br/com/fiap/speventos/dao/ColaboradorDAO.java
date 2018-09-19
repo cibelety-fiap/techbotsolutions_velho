@@ -49,8 +49,8 @@ public class ColaboradorDAO {
 
 		stmt = con.prepareStatement(
 				"SELECT * FROM T_SGE_PESSOA_FISICA INNER JOIN T_SGE_USUARIO ON "
-						+ "(T_SGE_COLABORADOR.CD_USUARIO=T_SGE_USUARIO.CD_USUARIO"
-						+ " WHERE CD_USUARIO = ?");
+						+ "(T_SGE_COLABORADOR.CD_USUARIO=T_SGE_USUARIO.CD_USUARIO) "
+						+ "WHERE CD_USUARIO = ?");
 
 		stmt.setInt(1, codigo);
 		rs = stmt.executeQuery();

@@ -43,10 +43,10 @@ public class PessoaFisicaDAO {
 		stmt = con.prepareStatement(
 				"SELECT * FROM T_SGE_PESSOA_FISICA"
 						+ " INNER JOIN T_SGE_PESSOA ON "
-						+ "(T_SGE_PESSOA_FISICA.CD_USUARIO=T_SGE_PESSOA.CD_USUARIO)"
-						+ " INNER JOIN T_SGE_USUARIO ON "
-						+ "(T_SGE_PESSOA_FISICA.CD_USUARIO=T_SGE_USUARIO.CD_USUARIO"
-						+ " WHERE CD_USUARIO = ?");
+						+ "(T_SGE_PESSOA_FISICA.CD_USUARIO=T_SGE_PESSOA.CD_USUARIO) "
+						+ "INNER JOIN T_SGE_USUARIO ON "
+						+ "(T_SGE_PESSOA_FISICA.CD_USUARIO=T_SGE_USUARIO.CD_USUARIO) "
+						+ "WHERE CD_USUARIO = ?");
 
 		stmt.setInt(1, codigo);
 		rs = stmt.executeQuery();
@@ -80,7 +80,7 @@ public class PessoaFisicaDAO {
 				+ " INNER JOIN T_SGE_PESSOA ON "
 				+ "(T_SGE_PESSOA_FISICA.CD_USUARIO=T_SGE_PESSOA.CD_USUARIO)"
 				+ " INNER JOIN T_SGE_USUARIO ON "
-				+ "(T_SGE_PESSOA_FISICA.CD_USUARIO=T_SGE_USUARIO.CD_USUARIO"
+				+ "(T_SGE_PESSOA_FISICA.CD_USUARIO=T_SGE_USUARIO.CD_USUARIO)"
 				+ " WHERE NM_USUARIO LIKE ?");
 
 		stmt.setString(1, "%" + nome + "%");

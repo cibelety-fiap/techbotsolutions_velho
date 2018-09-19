@@ -27,7 +27,7 @@
 //	 * @return uma String com a quantidade de registros inseridos ou o erro ocorrido
 //	 * @throws Exception - Chamada da exceção checked SQLException (???)
 //	 */
-//	public String novaRealizacaoEvento(RealizacaoEvento realizacaoEvento) throws Exception {
+//	public static String novaRealizacaoEvento(RealizacaoEvento realizacaoEvento) throws Exception {
 //
 //		// FAZER AS RNs, VALIDACOES E PADRONIZACOES
 //		
@@ -54,7 +54,7 @@
 //		return retorno;
 //	}
 //
-//	public RealizacaoEvento consultaEventoPorCodigo(int codRealizEvento) throws Exception {
+//	public static RealizacaoEvento consultaEventoPorCodigo(int codRealizEvento) throws Exception {
 //
 //		// FAZER AS RNs, VALIDACOES E PADRONIZACOES
 //		
@@ -66,7 +66,7 @@
 //		return retorno;
 //	}
 //
-//	public List<RealizacaoEvento> consultaEventoPorNomeEvento(String nomeEvento) throws Exception {
+//	public static List<RealizacaoEvento> consultaEventoPorNomeEvento(String nomeEvento) throws Exception {
 //
 //		// FAZER AS RNs, VALIDACOES E PADRONIZACOES
 //		
@@ -78,7 +78,7 @@
 //		return listaRealizEvento;
 //	}
 //
-//	public String edicaoRealizacaoEvento(RealizacaoEvento realizacaoEvento, int codRealizEvento) throws Exception {
+//	public static String edicaoRealizacaoEvento(RealizacaoEvento realizacaoEvento, int codRealizEvento) throws Exception {
 //
 //		// FAZER AS RNs, VALIDACOES E PADRONIZACOES
 //		
@@ -92,7 +92,7 @@
 //		return retorno;
 //	}
 //
-//	public String remocaoRealizacaoEvento(int codRealizEvento) throws Exception {
+//	public static String remocaoRealizacaoEvento(int codRealizEvento) throws Exception {
 //
 //		// FAZER AS RNs, VALIDACOES E PADRONIZACOES
 //		

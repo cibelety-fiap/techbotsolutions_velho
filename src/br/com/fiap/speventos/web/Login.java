@@ -9,7 +9,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import br.com.fiap.speventos.beans.Colaborador;
+import br.com.fiap.speventos.beans.PessoaFisica;
 import br.com.fiap.speventos.beans.Usuario;
+import br.com.fiap.speventos.bo.ColaboradorBO;
+import br.com.fiap.speventos.bo.PessoaFisicaBO;
 import br.com.fiap.speventos.bo.UsuarioBO;
 import br.com.fiap.speventos.excecao.Excecao;
 
@@ -24,21 +28,29 @@ public class Login extends HttpServlet {
 			String email = request.getParameter("email");
 			String senha = request.getParameter("senha");
 
-			UsuarioBO bo = new UsuarioBO();
-			Usuario usuario = bo.login(email, senha);
+			Usuario usuario = UsuarioBO.login(email, senha);
+
+			request.setAttribute("usuario", usuario);
 
 			if (usuario.getEmail() == null) {
 				RequestDispatcher dispatcher = request.getRequestDispatcher("loginErro.jsp");
 				dispatcher.forward(request, response);
 			} else {
-				request.setAttribute("usuario", usuario);
-			
-				// if(usuario.instanceOf(UsuarioPF) {				
-					RequestDispatcher dispatcher = request.getRequestDispatcher("loginColaborador.jsp");
-				// } else {
-				//	RequestDispatcher dispatcher = request.getRequestDispatcher("loginUsuario.jsp");	
-				// }
+				
+				PessoaFisica pessoaFisica = PessoaFisicaBO.consultaPessoaFisicaPorCodigo(usuario.getCodigoUsuario());
+				if (pessoaFisica.getCodigoUsuario() > 0) {
+				
+					RequestDispatcher dispatcher = request.getRequestDispatcher("loginPessoaFisica.jsp");
 					dispatcher.forward(request, response);
+					
+				} else {
+					
+					Colaborador colaborador = ColaboradorBO.consultaColaboradorPorCodigo(usuario.getCodigoUsuario());
+					if (colaborador.getCodigoUsuario() > 0) {
+						RequestDispatcher dispatcher = request.getRequestDispatcher("loginColaborador.jsp");
+						dispatcher.forward(request, response);	
+					}
+				} 
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
