@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import br.com.fiap.speventos.beans.PessoaFisica;
-import br.com.fiap.speventos.beans.Usuario;
 import br.com.fiap.speventos.conexao.Conexao;
 
 public class PessoaFisicaDAO {
@@ -41,12 +40,12 @@ public class PessoaFisicaDAO {
 	public PessoaFisica consultarPorCodigo(int codigo) throws Exception {
 
 		stmt = con.prepareStatement(
-				"SELECT * FROM T_SGE_PESSOA_FISICA"
-						+ " INNER JOIN T_SGE_PESSOA ON "
-						+ "(T_SGE_PESSOA_FISICA.CD_USUARIO=T_SGE_PESSOA.CD_USUARIO) "
-						+ "INNER JOIN T_SGE_USUARIO ON "
-						+ "(T_SGE_PESSOA_FISICA.CD_USUARIO=T_SGE_USUARIO.CD_USUARIO) "
-						+ "WHERE CD_USUARIO = ?");
+				"SELECT * FROM T_SGE_USUARIO "
+				+ "INNER JOIN T_SGE_PESSOA ON " 
+				+ "(T_SGE_USUARIO.CD_USUARIO=T_SGE_PESSOA.CD_USUARIO) " 
+				+ "INNER JOIN T_SGE_PESSOA_FISICA ON "
+				+ "(T_SGE_PESSOA.CD_USUARIO=T_SGE_PESSOA_FISICA.CD_USUARIO) " 
+				+ "WHERE T_SGE_PESSOA_FISICA.CD_USUARIO = ?");
 
 		stmt.setInt(1, codigo);
 		rs = stmt.executeQuery();
@@ -56,7 +55,7 @@ public class PessoaFisicaDAO {
 					rs.getInt("CD_USUARIO"),
 					rs.getString("DS_EMAIL"),
 					rs.getString("DS_SENHA"),
-					rs.getString("NM_USUARIO"),
+					rs.getString("NM_PESSOA"),
 					rs.getLong("NR_TELEFONE"),
 					rs.getString("DS_ENDERECO"),
 					rs.getLong("NR_CPF"),
@@ -76,12 +75,12 @@ public class PessoaFisicaDAO {
 
 		List<PessoaFisica> lista = new ArrayList<PessoaFisica>();
 
-		stmt = con.prepareStatement("SELECT * FROM T_SGE_PESSOA_FISICA"
-				+ " INNER JOIN T_SGE_PESSOA ON "
-				+ "(T_SGE_PESSOA_FISICA.CD_USUARIO=T_SGE_PESSOA.CD_USUARIO)"
-				+ " INNER JOIN T_SGE_USUARIO ON "
-				+ "(T_SGE_PESSOA_FISICA.CD_USUARIO=T_SGE_USUARIO.CD_USUARIO)"
-				+ " WHERE NM_USUARIO LIKE ?");
+		stmt = con.prepareStatement("SELECT * FROM T_SGE_USUARIO "
+				+ "INNER JOIN T_SGE_PESSOA ON " 
+				+ "(T_SGE_USUARIO.CD_USUARIO=T_SGE_PESSOA.CD_USUARIO) " 
+				+ "INNER JOIN T_SGE_PESSOA_FISICA ON "
+				+ "(T_SGE_PESSOA.CD_USUARIO=T_SGE_PESSOA_FISICA.CD_USUARIO) " 
+				+ "WHERE T_SGE_PESSOA_FISICA.NM_USUARIO LIKE ?");
 
 		stmt.setString(1, "%" + nome + "%");
 
@@ -90,7 +89,7 @@ public class PessoaFisicaDAO {
 					rs.getInt("CD_USUARIO"),
 					rs.getString("DS_EMAIL"),
 					rs.getString("DS_SENHA"),
-					rs.getString("NM_USUARIO"),
+					rs.getString("NM_PESSOA"),
 					rs.getLong("NR_TELEFONE"),
 					rs.getString("DS_ENDERECO"),
 					rs.getLong("NR_CPF"),

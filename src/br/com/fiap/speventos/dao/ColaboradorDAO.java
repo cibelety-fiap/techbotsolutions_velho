@@ -48,9 +48,10 @@ public class ColaboradorDAO {
 	public Colaborador consultarPorCodigo(int codigo) throws Exception {
 
 		stmt = con.prepareStatement(
-				"SELECT * FROM T_SGE_PESSOA_FISICA INNER JOIN T_SGE_USUARIO ON "
-						+ "(T_SGE_COLABORADOR.CD_USUARIO=T_SGE_USUARIO.CD_USUARIO) "
-						+ "WHERE CD_USUARIO = ?");
+				"SELECT * FROM T_SGE_USUARIO "
+						+ "INNER JOIN T_SGE_COLABORADOR ON "
+						+ "(T_SGE_USUARIO.CD_USUARIO=T_SGE_COLABORADOR.CD_USUARIO) "
+						+ "WHERE T_SGE_COLABORADOR.CD_USUARIO=?");
 
 		stmt.setInt(1, codigo);
 		rs = stmt.executeQuery();
@@ -73,9 +74,10 @@ public class ColaboradorDAO {
 
 		List<Colaborador> lista = new ArrayList<Colaborador>();
 
-		stmt = con.prepareStatement("SELECT * T_SGE_USUARIO INNER JOIN "
-				+ "T_SGE_COLABORADOR ON T_SGE_USUARIO.NM_USUARIO = "
-				+ "T_SGE_COLABORADOR.NM_USUARIO WHERE NM_USUARIO LIKE ?");
+		stmt = con.prepareStatement("SELECT * T_SGE_USUARIO "
+				+ "INNER JOIN T_SGE_COLABORADOR ON "
+				+ "(T_SGE_USUARIO.CD_USUARIO = T_SGE_COLABORADOR.CD_USUARIO) "
+				+ "WHERE T_SGE_USUARIO.NM_USUARIO LIKE ?");
 
 		stmt.setString(1, "%" + nome + "%");
 

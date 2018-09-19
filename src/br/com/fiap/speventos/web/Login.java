@@ -36,20 +36,15 @@ public class Login extends HttpServlet {
 				RequestDispatcher dispatcher = request.getRequestDispatcher("loginErro.jsp");
 				dispatcher.forward(request, response);
 			} else {
+				Colaborador colaborador = ColaboradorBO.consultaColaboradorPorCodigo(usuario.getCodigoUsuario());
 				
-				PessoaFisica pessoaFisica = PessoaFisicaBO.consultaPessoaFisicaPorCodigo(usuario.getCodigoUsuario());
-				if (pessoaFisica.getCodigoUsuario() > 0) {
-				
-					RequestDispatcher dispatcher = request.getRequestDispatcher("loginPessoaFisica.jsp");
+				if (colaborador.getCodigoUsuario() > 0) {		
+					RequestDispatcher dispatcher = request.getRequestDispatcher("loginColaborador.jsp");
 					dispatcher.forward(request, response);
 					
 				} else {
-					
-					Colaborador colaborador = ColaboradorBO.consultaColaboradorPorCodigo(usuario.getCodigoUsuario());
-					if (colaborador.getCodigoUsuario() > 0) {
-						RequestDispatcher dispatcher = request.getRequestDispatcher("loginColaborador.jsp");
-						dispatcher.forward(request, response);	
-					}
+					RequestDispatcher dispatcher = request.getRequestDispatcher("loginPessoaFisica.jsp");
+					dispatcher.forward(request, response);	
 				} 
 			}
 		} catch (Exception e) {
