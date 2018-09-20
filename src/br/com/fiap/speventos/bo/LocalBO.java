@@ -30,7 +30,7 @@ public class LocalBO {
 		
 		if (localRepetido.getCodigoLocal() > 0) {
 			return "Local já existe";
-		}		
+		}
 		
 		int retorno = dao.cadastrar(local);
 		dao.fechar();
