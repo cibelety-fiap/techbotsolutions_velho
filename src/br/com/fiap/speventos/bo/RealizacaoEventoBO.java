@@ -33,6 +33,12 @@ public class RealizacaoEventoBO {
 			return "Codigo de realizacao de evento invalido";
 		}
 		
+//		if (realizacaoEvento.getEvento().get || evento.getNome().length() > 80) {
+//			return “Nome do evento inválido”;
+//		}
+
+		
+		
 		RealizacaoEventoDAO dao = new RealizacaoEventoDAO();
 
 		RealizacaoEvento realizacaoEventoCodRepetido = dao
