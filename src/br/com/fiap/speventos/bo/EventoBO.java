@@ -30,13 +30,6 @@ public class EventoBO {
 		if (evento.getContatoMaisInfo().isEmpty() || evento.getContatoMaisInfo().length() > 60) {
 			return "Contato mais info invalido";
 		}
-
-		evento.setLinkImagem(evento.getLinkImagem().toUpperCase());
-		evento.setNomeEvento(evento.getNomeEvento().toUpperCase());
-		evento.setTipoEvento(evento.getTipoEvento().toUpperCase());
-		evento.setSubtipoEvento(evento.getSubtipoEvento().toUpperCase());
-		evento.setDescricaoEvento(evento.getDescricaoEvento().toUpperCase());
-		evento.setContatoMaisInfo(evento.getContatoMaisInfo().toUpperCase());
 		
 		EventoDAO dao = new EventoDAO();
 
@@ -45,6 +38,13 @@ public class EventoBO {
 		if (eventoCodRepetido.getCodigoEvento() > 0) {
 			return "Evento já existe";
 		}
+		
+		evento.setLinkImagem(evento.getLinkImagem().toUpperCase());
+		evento.setNomeEvento(evento.getNomeEvento().toUpperCase());
+		evento.setTipoEvento(evento.getTipoEvento().toUpperCase());
+		evento.setSubtipoEvento(evento.getSubtipoEvento().toUpperCase());
+		evento.setDescricaoEvento(evento.getDescricaoEvento().toUpperCase());
+		evento.setContatoMaisInfo(evento.getContatoMaisInfo().toUpperCase());
 
 		String retorno = dao.cadastrar(evento) + "registro inserido";
 
@@ -106,16 +106,16 @@ public class EventoBO {
 			return "Contato mais info invalido";
 		}
 
+		EventoDAO dao = new EventoDAO();
+
+		String retorno = dao.editar(evento) + "registro editado";
+		
 		evento.setLinkImagem(evento.getLinkImagem().toUpperCase());
 		evento.setNomeEvento(evento.getNomeEvento().toUpperCase());
 		evento.setTipoEvento(evento.getTipoEvento().toUpperCase());
 		evento.setSubtipoEvento(evento.getSubtipoEvento().toUpperCase());
 		evento.setDescricaoEvento(evento.getDescricaoEvento().toUpperCase());
 		evento.setContatoMaisInfo(evento.getContatoMaisInfo().toUpperCase());
-
-		EventoDAO dao = new EventoDAO();
-
-		String retorno = dao.editar(evento) + "registro editado";
 		
 		dao.fechar();	
 		return retorno;
