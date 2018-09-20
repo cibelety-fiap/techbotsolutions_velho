@@ -73,10 +73,9 @@ public class RealizacaoEventoBO {
 		
 		String retorno = null;
 
-//		if ((localValido.equals("1 registro cadastrado") || localExiste.equals(nu) && (eventoValido.equals(null))) {
-//			retorno = dao.cadastrar(realizacaoEvento) + "registro inserido";
-//		}
-
+		if(localValido.equals("1 registro inserido") || localValido.equals(null)) {
+			retorno = RealizacaoEventoBO.novaRealizacaoEvento(realizacaoEvento);
+		}
 		dao.fechar();
 		return retorno;
 	}
