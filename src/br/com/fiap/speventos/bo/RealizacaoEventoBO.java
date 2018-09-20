@@ -2,6 +2,8 @@ package br.com.fiap.speventos.bo;
 
 import java.util.List;
 
+import br.com.fiap.speventos.beans.Evento;
+import br.com.fiap.speventos.beans.Local;
 import br.com.fiap.speventos.beans.RealizacaoEvento;
 import br.com.fiap.speventos.dao.RealizacaoEventoDAO;
 
@@ -36,8 +38,14 @@ public class RealizacaoEventoBO {
 //		if (realizacaoEvento.getEvento().get || evento.getNome().length() > 80) {
 //			return “Nome do evento inválido”;
 //		}
-
 		
+//		private int codigoRealizacaoEvento;
+//		private Evento evento;
+//		private Local local;
+//		private Date dataHoraInicio;
+//		private Date dataHoraTermino;
+
+		//Validar data
 		
 		RealizacaoEventoDAO dao = new RealizacaoEventoDAO();
 
@@ -48,8 +56,16 @@ public class RealizacaoEventoBO {
 			return "Realizacao de evento ja existe!";
 		}
 
+		Evento eventoExiste = EventoBO.consultaEvento(realizacaoEvento.getCodigoRealizacaoEvento());
+		
+		if(eventoExiste.getCodigoEvento() == 0) {
+			return "Evento relacionado a realizacao de evento invalido";
+		} 
+		
+		Local existeLocal = LocalBO.consultaLocalPorCodigo(realizacaoEvento.getLocal().getCodigoLocal());
+				if(existe.consultagetLocal().getCodigoLocal() )
+		
 		String localValido = LocalBO.novoLocal(realizacaoEvento.getLocal());
-		String eventoValido = EventoBO.novoEvento(realizacaoEvento.getEvento());
 
 		String retorno = null;
 

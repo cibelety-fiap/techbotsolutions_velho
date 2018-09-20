@@ -5,14 +5,32 @@ import java.util.List;
 import br.com.fiap.speventos.beans.Local;
 import br.com.fiap.speventos.dao.LocalDAO;
 
+//private int codigoLocal;
+//private String nomeLocal;
+//private String enderecoLocal;
+
 public class LocalBO {
 
 
 	public static String novoLocal(Local local) throws Exception {
 		
-		// FAZER AS RNs, VALIDACOES E PADRONIZACOES
+		if (local.getCodigoLocal() < 1) {
+			return "Codigo do local invalido";
+		}	
+		if (local.getNomeLocal().isEmpty() || local.getNomeLocal().length() > 60) {
+			return "Nome do local invalido";
+		}
+		if (local.getEnderecoLocal().isEmpty() || local.getEnderecoLocal().length() > 100) {
+			return "Endereco do local invalido";
+		}
 		
 		LocalDAO dao = new LocalDAO();
+
+		Local localRepetido = LocalBO.consultaLocalPorCodigo(local.getCodigoLocal());
+		
+		if (localRepetido.getCodigoLocal() > 0) {
+			return "Local já existe";
+		}		
 		
 		int retorno = dao.cadastrar(local);
 		dao.fechar();
@@ -20,7 +38,7 @@ public class LocalBO {
 		return retorno + "registro cadastrado";
 	}
 	
-	public Local consultaLocalPorCodigo(int codLocal) throws Exception {
+	public static Local consultaLocalPorCodigo(int codLocal) throws Exception {
 		
 		// FAZER AS RNs, VALIDACOES E PADRONIZACOES
 		
@@ -32,7 +50,7 @@ public class LocalBO {
 		return retorno; 
 	}
 	
-	public List<Local> consultaLocalPorNome(String nomeLocal) throws Exception {
+	public static List<Local> consultaLocalPorNome(String nomeLocal) throws Exception {
 		
 		// FAZER AS RNs, VALIDACOES E PADRONIZACOES
 
@@ -46,7 +64,7 @@ public class LocalBO {
 		
 	}
 	
-	public String edicaoLocal(Local local) throws Exception {
+	public static String edicaoLocal(Local local) throws Exception {
 		
 		// FAZER AS RNs, VALIDACOES E PADRONIZACOES
 		
@@ -58,7 +76,7 @@ public class LocalBO {
 		return retorno + "registro editado";
 	}
 	
-	public String remocaoLocal(int codLocal) throws Exception {
+	public static String remocaoLocal(int codLocal) throws Exception {
 		
 		// FAZER AS RNs, VALIDACOES E PADRONIZACOES
 		
