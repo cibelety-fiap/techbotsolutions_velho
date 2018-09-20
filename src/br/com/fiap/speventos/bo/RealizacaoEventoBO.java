@@ -50,11 +50,11 @@ public class RealizacaoEventoBO {
 		
 		RealizacaoEventoDAO dao = new RealizacaoEventoDAO();
 
-		RealizacaoEvento realizacaoEventoExiste = dao
+		RealizacaoEvento realizacaoEventoRepetido = dao
 				.consultarPorCodigo(realizacaoEvento.getCodigoRealizacaoEvento());
 
-		if (realizacaoEventoExiste.getCodigoRealizacaoEvento() > 0) {
-			return "Realizacao de evento ja existe!";
+		if (realizacaoEventoRepetido.getCodigoRealizacaoEvento() > 0) {
+			return "Realizacao de evento ja existe";
 		}
 
 		Evento eventoExiste = EventoBO.consultaEvento(realizacaoEvento.getCodigoRealizacaoEvento());
@@ -63,17 +63,19 @@ public class RealizacaoEventoBO {
 			return "Evento relacionado a realizacao de evento invalido";
 		} 
 		
-		Local existeLocal = LocalBO.consultaLocalPorCodigo(realizacaoEvento.getLocal().getCodigoLocal());
-				if(existe.consultagetLocal().getCodigoLocal() )
+		Local localExiste = LocalBO.consultaLocalPorCodigo(realizacaoEvento.getLocal().getCodigoLocal());
+				
+		String localValido = null;
 		
-		String localValido = LocalBO.novoLocal(realizacaoEvento.getLocal());
-
+		if(localExiste.getCodigoLocal() == 0) {
+			localValido = LocalBO.novoLocal(realizacaoEvento.getLocal());
+		}
+		
 		String retorno = null;
 
-		if ((localValido.equals("OK") || localValido.equals(null))
-				&& (eventoValido.equals("OK") || eventoValido.equals(null))) {
-			retorno = dao.cadastrar(realizacaoEvento) + "registro inserido";
-		}
+//		if ((localValido.equals("1 registro cadastrado") || localExiste.equals(nu) && (eventoValido.equals(null))) {
+//			retorno = dao.cadastrar(realizacaoEvento) + "registro inserido";
+//		}
 
 		dao.fechar();
 		return retorno;
