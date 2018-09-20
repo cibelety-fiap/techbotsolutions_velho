@@ -1,5 +1,6 @@
 package br.com.fiap.speventos.bo;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import br.com.fiap.speventos.beans.Evento;
@@ -31,6 +32,12 @@ public class RealizacaoEventoBO {
 	 */
 	public static String novaRealizacaoEvento(RealizacaoEvento realizacaoEvento) throws Exception {
 
+//		private int codigoRealizacaoEvento;
+//		private Evento evento;
+//		private Local local;
+//		private Date dataHoraInicio;
+//		private Date dataHoraTermino;
+		
 		if (realizacaoEvento.getCodigoRealizacaoEvento() < 1) {
 			return "Codigo de realizacao de evento invalido";
 		}
@@ -38,21 +45,15 @@ public class RealizacaoEventoBO {
 //		if (realizacaoEvento.getEvento().get || evento.getNome().length() > 80) {
 //			return “Nome do evento inválido”;
 //		}
-		
-//		private int codigoRealizacaoEvento;
-//		private Evento evento;
-//		private Local local;
-//		private Date dataHoraInicio;
-//		private Date dataHoraTermino;
 
-		//Validar data
+		//Validar data???
 		
 		RealizacaoEventoDAO dao = new RealizacaoEventoDAO();
 
-		RealizacaoEvento realizacaoEventoCodRepetido = dao
+		RealizacaoEvento realizacaoEventoExiste = dao
 				.consultarPorCodigo(realizacaoEvento.getCodigoRealizacaoEvento());
 
-		if (realizacaoEventoCodRepetido.getCodigoRealizacaoEvento() > 0) {
+		if (realizacaoEventoExiste.getCodigoRealizacaoEvento() > 0) {
 			return "Realizacao de evento ja existe!";
 		}
 
@@ -79,32 +80,35 @@ public class RealizacaoEventoBO {
 	}
 
 	public static RealizacaoEvento consultaEventoPorCodigo(int codRealizEvento) throws Exception {
-
-		// FAZER AS RNs, VALIDACOES E PADRONIZACOES
+		if (codRealizEvento < 1 || codRealizEvento > 99999 ) {
+			return new RealizacaoEvento();
+		}
 		
 		RealizacaoEventoDAO dao = new RealizacaoEventoDAO();
-
-			RealizacaoEvento retorno = dao.consultarPorCodigo(codRealizEvento);
-
+		RealizacaoEvento retorno = dao.consultarPorCodigo(codRealizEvento);
 		dao.fechar();
+		
 		return retorno;
 	}
 
 	public static List<RealizacaoEvento> consultaEventoPorNomeEvento(String nomeEvento) throws Exception {
 
-		// FAZER AS RNs, VALIDACOES E PADRONIZACOES
+		List<RealizacaoEvento> listaRealizacaoEvento = new ArrayList<RealizacaoEvento>();
+
+		if (nomeEvento.isEmpty() || nomeEvento.length() > 80 ) {
+			return listaRealizacaoEvento;
+		}
+		
+		nomeEvento = nomeEvento.toUpperCase();
 		
 		RealizacaoEventoDAO dao = new RealizacaoEventoDAO();
-
-			List<RealizacaoEvento> listaRealizEvento = dao.consultarPorNomeEvento(nomeEvento);
-
+		listaRealizacaoEvento = dao.consultarPorNomeEvento(nomeEvento);
 		dao.fechar();
-		return listaRealizEvento;
+		
+		return listaRealizacaoEvento;
 	}
 
 	public static String edicaoRealizacaoEvento(RealizacaoEvento realizacaoEvento, int codRealizEvento) throws Exception {
-
-		// FAZER AS RNs, VALIDACOES E PADRONIZACOES
 		
 		RealizacaoEventoDAO dao = new RealizacaoEventoDAO();
 
@@ -116,7 +120,7 @@ public class RealizacaoEventoBO {
 
 	public static String remocaoRealizacaoEvento(int codRealizEvento) throws Exception {
 
-		if (codRealizEvento < 1) {
+		if (codRealizEvento < 1 || codRealizEvento > 99999) {
 			return "Codigo invalido";
 		}
 		

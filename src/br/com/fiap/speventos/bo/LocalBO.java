@@ -1,20 +1,18 @@
 package br.com.fiap.speventos.bo;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import br.com.fiap.speventos.beans.Local;
 import br.com.fiap.speventos.dao.LocalDAO;
 
-//private int codigoLocal;
-//private String nomeLocal;
-//private String enderecoLocal;
 
 public class LocalBO {
 
 
 	public static String novoLocal(Local local) throws Exception {
 		
-		if (local.getCodigoLocal() < 1) {
+		if (local.getCodigoLocal() < 1 || local.getCodigoLocal() > 99999) {
 			return "Codigo do local invalido";
 		}	
 		if (local.getNomeLocal().isEmpty() || local.getNomeLocal().length() > 60) {
@@ -32,6 +30,9 @@ public class LocalBO {
 			return "Local já existe";
 		}
 		
+		local.setNomeLocal(local.getNomeLocal().toUpperCase());
+		local.setEnderecoLocal(local.getEnderecoLocal().toUpperCase());
+		
 		int retorno = dao.cadastrar(local);
 		dao.fechar();
 		
@@ -40,7 +41,9 @@ public class LocalBO {
 	
 	public static Local consultaLocalPorCodigo(int codLocal) throws Exception {
 		
-		// FAZER AS RNs, VALIDACOES E PADRONIZACOES
+		if (codLocal < 1 || codLocal > 99999) {
+			return new Local();
+		}
 		
 		LocalDAO dao = new LocalDAO();
 		
@@ -51,14 +54,19 @@ public class LocalBO {
 	}
 	
 	public static List<Local> consultaLocalPorNome(String nomeLocal) throws Exception {
-		
-		// FAZER AS RNs, VALIDACOES E PADRONIZACOES
 
+		List<Local> listaLocal = new ArrayList<Local>();
+
+		if (nomeLocal.isEmpty() || nomeLocal.length() > 60 ) {
+			return listaLocal;
+		}
+		
+		nomeLocal = nomeLocal.toUpperCase();
 		
 		LocalDAO dao = new LocalDAO();
+		listaLocal = dao.consultarPorNome(nomeLocal);
 		
-		List<Local> listaLocal = dao.consultarPorNome(nomeLocal);
-		dao.fechar();
+		dao.fechar();		
 		
 		return listaLocal; 
 		
@@ -66,9 +74,20 @@ public class LocalBO {
 	
 	public static String edicaoLocal(Local local) throws Exception {
 		
-		// FAZER AS RNs, VALIDACOES E PADRONIZACOES
+		if (local.getCodigoLocal() < 1 || local.getCodigoLocal() > 99999) {
+			return "Codigo do local invalido";
+		}	
+		if (local.getNomeLocal().isEmpty() || local.getNomeLocal().length() > 60) {
+			return "Nome do local invalido";
+		}
+		if (local.getEnderecoLocal().isEmpty() || local.getEnderecoLocal().length() > 100) {
+			return "Endereco do local invalido";
+		}
 		
 		LocalDAO dao = new LocalDAO();
+		
+		local.setNomeLocal(local.getNomeLocal().toUpperCase());
+		local.setEnderecoLocal(local.getEnderecoLocal().toUpperCase());
 		
 		int retorno = dao.editar(local);
 		dao.fechar();
@@ -78,7 +97,10 @@ public class LocalBO {
 	
 	public static String remocaoLocal(int codLocal) throws Exception {
 		
-		// FAZER AS RNs, VALIDACOES E PADRONIZACOES
+		if (codLocal < 1 || codLocal > 99999) {
+			return "Codigo do local invalido";
+		}
+
 		
 		LocalDAO dao = new LocalDAO();
 		
