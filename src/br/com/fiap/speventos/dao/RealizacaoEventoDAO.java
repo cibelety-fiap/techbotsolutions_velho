@@ -52,8 +52,8 @@ public class RealizacaoEventoDAO {
 		stmt.setInt(1, realizacaoEvento.getCodigoRealizacaoEvento());
 		stmt.setInt(2, realizacaoEvento.getEvento().getCodigoEvento());
 		stmt.setInt(3, realizacaoEvento.getLocal().getCodigoLocal());
-		stmt.setDate(4, realizacaoEvento.getDataHoraInicio());
-		stmt.setDate(5, realizacaoEvento.getDataHoraTermino());
+		stmt.setString(4, realizacaoEvento.getDataHoraInicio());
+		stmt.setString(5, realizacaoEvento.getDataHoraTermino());
 
 		
 
@@ -61,9 +61,16 @@ public class RealizacaoEventoDAO {
 	}
 
 	public RealizacaoEvento consultarPorCodigo(int codRealizEvento) throws Exception {
-		stmt = con.prepareStatement("SELECT * FROM T_SGE_REALIZACAO_EVENTO " + "INNER JOIN T_SGE_EVENTO ON "
+		stmt = con.prepareStatement("SELECT T_SGE_REALIZACAO_EVENTO.CD_REALIZ_EVENTO, "
+				+ "T_SGE_REALIZACAO_EVENTO.CD_EVENTO, T_SGE_REALIZACAO_EVENTO.CD_LOCAL, "
+				+ "TO_CHAR(T_SGE_REALIZACAO_EVENTO.DT_HR_INICIO,'DD/MM/YYYY HH24:MI') \"DT_HR_INICIO\", "
+				+ "TO_CHAR(T_SGE_REALIZACAO_EVENTO.DT_HR_TERMINO,'DD/MM/YYYY HH24:MI') \"DT_HR_TERMINO\", "
+				+ "T_SGE_EVENTO.DS_LINK_IMAGEM, T_SGE_EVENTO.NM_EVENTO, T_SGE_EVENTO.DS_TIPO_EVENTO, "
+				+ "T_SGE_EVENTO.DS_SUBTIPO_EVENTO, T_SGE_EVENTO.DS_EVENTO, " 
+				+ "T_SGE_EVENTO.DS_CONTATO_MAIS_INFO, T_SGE_LOCAL.NM_LOCAL, T_SGE_LOCAL.DS_ENDERECO "
+				+ "FROM T_SGE_REALIZACAO_EVENTO " + "INNER JOIN T_SGE_EVENTO ON "
 				+ "(T_SGE_REALIZACAO_EVENTO.CD_EVENTO=T_SGE_EVENTO.CD_EVENTO) " + "INNER JOIN T_SGE_LOCAL ON "
-				+ "(T_SGE_REALIZACAO_EVENTO.CD_LOCAL=T_SGE_LOCAL.CD_LOCAL) " + "WHERE CD_REALIZACAO_EVENTO=?");
+				+ "(T_SGE_REALIZACAO_EVENTO.CD_LOCAL=T_SGE_LOCAL.CD_LOCAL) " + "WHERE CD_REALIZ_EVENTO=?");
 
 		stmt.setInt(1, codRealizEvento);
 
@@ -75,7 +82,7 @@ public class RealizacaoEventoDAO {
 							rs.getString("DS_TIPO_EVENTO"), rs.getString("DS_SUBTIPO_EVENTO"),
 							rs.getString("DS_EVENTO"), rs.getString("DS_CONTATO_MAIS_INFO")),
 					new Local(rs.getInt("CD_LOCAL"), rs.getString("NM_LOCAL"), rs.getString("DS_ENDERECO")),
-					rs.getDate("DT_HR_INICIO"), rs.getDate("DT_HR_TERMINO"));
+					rs.getString("DT_HR_INICIO"), rs.getString("DT_HR_TERMINO"));
 		} else {
 			return new RealizacaoEvento();
 		}
@@ -101,7 +108,7 @@ public class RealizacaoEventoDAO {
 							rs.getString("DS_TIPO_EVENTO"), rs.getString("DS_SUBTIPO_EVENTO"),
 							rs.getString("DS_EVENTO"), rs.getString("DS_CONTATO_MAIS_INFO")),
 					new Local(rs.getInt("CD_LOCAL"), rs.getString("NM_LOCAL"), rs.getString("DS_ENDERECO")),
-					rs.getDate("DT_HR_INICIO"), rs.getDate("DT_HR_TERMINO")));
+					rs.getString("DT_HR_INICIO"), rs.getString("DT_HR_TERMINO")));
 		}
 
 		return listaRealizEvento;
@@ -118,8 +125,8 @@ public class RealizacaoEventoDAO {
 		stmt.setInt(1, realizacaoEvento.getCodigoRealizacaoEvento());
 		stmt.setInt(2, realizacaoEvento.getEvento().getCodigoEvento());
 		stmt.setInt(3, realizacaoEvento.getLocal().getCodigoLocal());
-		stmt.setDate(4, realizacaoEvento.getDataHoraInicio());
-		stmt.setDate(5, realizacaoEvento.getDataHoraTermino());
+		stmt.setString(4, realizacaoEvento.getDataHoraInicio());
+		stmt.setString(5, realizacaoEvento.getDataHoraTermino());
 		stmt.setInt(6, realizacaoEvento.getCodigoRealizacaoEvento());
 
 		return stmt.executeUpdate();

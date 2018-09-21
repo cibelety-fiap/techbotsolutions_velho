@@ -27,7 +27,7 @@ public class LocalBO {
 		Local localRepetido = LocalBO.consultaLocalPorCodigo(local.getCodigoLocal());
 		
 		if (localRepetido.getCodigoLocal() > 0) {
-			return "Local já existe";
+			return "local ja existe";
 		}
 		
 		local.setNomeLocal(local.getNomeLocal().toUpperCase());

@@ -28,7 +28,7 @@ public class RealizacaoEventoBO {
 	 * @author Techbot Solutions
 	 * @param realizacaoEvento recebe um objeto do tipo RealizacaoEvento (Beans)
 	 * @return uma String com a quantidade de registros inseridos ou o erro ocorrido
-	 * @throws Exception - Chamada da exceção checked SQLException (???)
+	 * @throws Exception - Chamada da exceção checked Exception
 	 */
 	public static String novaRealizacaoEvento(RealizacaoEvento realizacaoEvento) throws Exception {
 
@@ -38,16 +38,29 @@ public class RealizacaoEventoBO {
 //		private Date dataHoraInicio;
 //		private Date dataHoraTermino;
 		
-		if (realizacaoEvento.getCodigoRealizacaoEvento() < 1) {
+		if (realizacaoEvento.getCodigoRealizacaoEvento() < 1 || 
+				realizacaoEvento.getCodigoRealizacaoEvento() > 99999) {
 			return "Codigo de realizacao de evento invalido";
 		}
 		
-//		if (realizacaoEvento.getEvento().get || evento.getNome().length() > 80) {
-//			return “Nome do evento inválido”;
-//		}
-
-		//Validar data???
+		if (realizacaoEvento.getEvento().getCodigoEvento() < 1 || 
+				realizacaoEvento.getEvento().getCodigoEvento() > 99999) {
+			return "Codigo de evento invalido";
+		}
 		
+		if (realizacaoEvento.getLocal().getCodigoLocal() < 1 || 
+				realizacaoEvento.getLocal().getCodigoLocal() > 99999) {
+			return "Codigo de evento invalido";
+		}
+
+		if (!DataBO.validacaoDataHora(realizacaoEvento.getDataHoraInicio())) {
+			return "Data/hora de inicio invalida(s)";
+		}
+		
+		if (!DataBO.validacaoDataHora(realizacaoEvento.getDataHoraTermino())) {
+			return "Data/hora de termino invalida(s)";
+		}
+					
 		RealizacaoEventoDAO dao = new RealizacaoEventoDAO();
 
 		RealizacaoEvento realizacaoEventoRepetido = dao
@@ -57,14 +70,15 @@ public class RealizacaoEventoBO {
 			return "Realizacao de evento ja existe";
 		}
 
-		Evento eventoExiste = EventoBO.consultaEvento(realizacaoEvento.getCodigoRealizacaoEvento());
+		Evento eventoExiste = EventoBO.consultaEvento(realizacaoEvento.getEvento().getCodigoEvento());
 		
 		if(eventoExiste.getCodigoEvento() == 0) {
-			return "Evento relacionado a realizacao de evento invalido";
+			return "Evento relacionado a realizacao de evento nao existe";
 		} 
 		
 		Local localExiste = LocalBO.consultaLocalPorCodigo(realizacaoEvento.getLocal().getCodigoLocal());
-				
+		System.out.println(localExiste.getCodigoLocal());
+		
 		String localValido = null;
 		
 		if(localExiste.getCodigoLocal() == 0) {
@@ -74,8 +88,9 @@ public class RealizacaoEventoBO {
 		String retorno = null;
 
 		if(localValido.equals("1 registro inserido") || localValido.equals(null)) {
-			retorno = RealizacaoEventoBO.novaRealizacaoEvento(realizacaoEvento);
+			retorno = dao.cadastrar(realizacaoEvento) + " registro inserido";
 		}
+		
 		dao.fechar();
 		return retorno;
 	}
@@ -111,9 +126,51 @@ public class RealizacaoEventoBO {
 
 	public static String edicaoRealizacaoEvento(RealizacaoEvento realizacaoEvento, int codRealizEvento) throws Exception {
 		
+		if (realizacaoEvento.getCodigoRealizacaoEvento() < 1 || 
+				realizacaoEvento.getCodigoRealizacaoEvento() > 99999) {
+			return "Codigo de realizacao de evento invalido";
+		}
+		
+		if (realizacaoEvento.getEvento().getCodigoEvento() < 1 || 
+				realizacaoEvento.getEvento().getCodigoEvento() > 99999) {
+			return "Codigo de evento invalido";
+		}
+		
+		if (realizacaoEvento.getLocal().getCodigoLocal() < 1 || 
+				realizacaoEvento.getLocal().getCodigoLocal() > 99999) {
+			return "Codigo de evento invalido";
+		}
+
+		if (!DataBO.validacaoDataHora(realizacaoEvento.getDataHoraInicio())) {
+			return "Data/hora de inicio invalida(s)";
+		}
+		
+		if (!DataBO.validacaoDataHora(realizacaoEvento.getDataHoraTermino())) {
+			return "Data/hora de termino invalida(s)";
+		}
+					
 		RealizacaoEventoDAO dao = new RealizacaoEventoDAO();
 
-		String retorno = dao.editar(realizacaoEvento) + "registro editado";
+		Evento eventoExiste = EventoBO.consultaEvento(realizacaoEvento.getCodigoRealizacaoEvento());
+		
+		if(eventoExiste.getCodigoEvento() == 0) {
+			return "Evento relacionado a realizacao de evento nao existe";
+		} 
+		
+		Local localExiste = LocalBO.consultaLocalPorCodigo(realizacaoEvento.getLocal().getCodigoLocal());
+				
+		String localValido = null;
+		
+		if(localExiste.getCodigoLocal() == 0) {
+			//o usuario nao pode editar o local, somente adicionar um novo com valores alterados
+			localValido = LocalBO.novoLocal(realizacaoEvento.getLocal());
+		}
+		
+		String retorno = null;
+
+		if(localValido.equals("1 registro inserido") || localValido.equals(null)) {
+			retorno = dao.cadastrar(realizacaoEvento) + " registro editado";
+		}
 
 		dao.fechar();
 		return retorno;
@@ -127,7 +184,7 @@ public class RealizacaoEventoBO {
 		
 		RealizacaoEventoDAO dao = new RealizacaoEventoDAO();
 		
-		String retorno = dao.remover(codRealizEvento) + "registro removido";
+		String retorno = dao.remover(codRealizEvento) + " registro removido";
 		
 		dao.fechar();
 		return retorno;

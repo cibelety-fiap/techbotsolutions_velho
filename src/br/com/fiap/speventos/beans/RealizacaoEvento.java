@@ -1,20 +1,19 @@
 package br.com.fiap.speventos.beans;
 
-import java.sql.Date;
-
 public class RealizacaoEvento {
 
 	private int codigoRealizacaoEvento;
 	private Evento evento;
 	private Local local;
-	private Date dataHoraInicio;
-	private Date dataHoraTermino;
+	private String dataHoraInicio;
+	private String dataHoraTermino;
 
 	public RealizacaoEvento() {
 	}
 
-	public RealizacaoEvento(int codigoRealizacaoEvento, Evento evento, Local local, Date dataHoraInicio,
-			Date dataHoraTermino) {
+	public RealizacaoEvento(int codigoRealizacaoEvento, Evento evento, Local local, String dataHoraInicio,
+			String dataHoraTermino) {
+		super();
 		this.codigoRealizacaoEvento = codigoRealizacaoEvento;
 		this.evento = evento;
 		this.local = local;
@@ -46,19 +45,19 @@ public class RealizacaoEvento {
 		this.local = local;
 	}
 
-	public Date getDataHoraInicio() {
+	public String getDataHoraInicio() {
 		return dataHoraInicio;
 	}
 
-	public void setDataHoraInicio(Date dataHoraInicio) {
+	public void setDataHoraInicio(String dataHoraInicio) {
 		this.dataHoraInicio = dataHoraInicio;
 	}
 
-	public Date getDataHoraTermino() {
+	public String getDataHoraTermino() {
 		return dataHoraTermino;
 	}
 
-	public void setDataHoraTermino(Date dataHoraTermino) {
+	public void setDataHoraTermino(String dataHoraTermino) {
 		this.dataHoraTermino = dataHoraTermino;
 	}
 
