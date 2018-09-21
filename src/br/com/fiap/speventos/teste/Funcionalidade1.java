@@ -1,8 +1,11 @@
 package br.com.fiap.speventos.teste;
 
+import javax.swing.JOptionPane;
+
 import br.com.fiap.speventos.beans.Local;
 import br.com.fiap.speventos.beans.RealizacaoEvento;
 import br.com.fiap.speventos.bo.EventoBO;
+import br.com.fiap.speventos.bo.LocalBO;
 import br.com.fiap.speventos.bo.RealizacaoEventoBO;
 import br.com.fiap.speventos.excecao.Excecao;
 import br.com.fiap.speventos.view.Magica;
@@ -11,26 +14,28 @@ public class Funcionalidade1 {
 
 	public static void main(String[] args) {
 
-		try {
+		try {	
 
-//			RealizacaoEvento realizacaoEvento = new RealizacaoEvento(
-//						100,
-//						new Evento(100, "img/imagem.png", "Nome do filme", "Cinema", "Terror",
-//								"A freira é um filme terror que...", "email@email.com"),
-//						new Local(100, "Shopping Santa Cruz", "Av. Domingo de Moraes, 1234"),
-//						"20/09/2018 16:00",
-//						"20/09/2018 18:00"
-//					);		
-
-			int codigoRealizEvento = Magica.inteiro("Digite o codigo da realizacao do evento");
-			int codEvento = Magica.inteiro("Digite o codigo do Evento");
+			int codigoRealizEvento = Magica.inteiro("Codigo da Realizacao do Evento");
+			int codEvento = Magica.inteiro("Codigo do Evento");
+			int codLocal = Magica.inteiro("Codigo Local");
+			
+			Local local = LocalBO.consultaLocalPorCodigo(codLocal);
+			if (local.getCodigoLocal()==0) {
+				JOptionPane.showMessageDialog(null, "Local não encontrado, preencha os próximos dados.");
+				local = new Local(codLocal, Magica.texto("Nome Local"), Magica.texto("Endereco do local"));
+			} else {
+				JOptionPane.showMessageDialog(null, "Local encontrado, os dados serão preenchidos automaticamente.");
+			}
+			String dataHoraInicio = Magica.texto("Data de inicio = dd/mm/yyyy") + " " + Magica.texto("Hora de inicio - hh:mi");
+			String dataHoraTermino = Magica.texto("Data de termino = dd/mm/yyyy") + " " + Magica.texto("Hora de termino - hh:mi");
+			
 			RealizacaoEvento realizacaoEvento2 = new RealizacaoEvento(
 					codigoRealizEvento,
 					EventoBO.consultaEvento(codEvento),
-					new Local(
-							Magica.inteiro("Codigo do Local"), Magica.texto("Nome Local"), Magica.texto("Endereco do local")), 
-					Magica.texto("Digite data/hora inicio do evento"),
-					Magica.texto("Digite data/hora termino")
+					local, 
+					dataHoraInicio,
+					dataHoraTermino
 				);
 			
 			System.out.println(RealizacaoEventoBO.novaRealizacaoEvento(realizacaoEvento2));

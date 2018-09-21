@@ -36,7 +36,7 @@ public class LocalBO {
 		int retorno = dao.cadastrar(local);
 		dao.fechar();
 		
-		return retorno + "registro cadastrado";
+		return retorno + " registro cadastrado";
 	}
 	
 	public static Local consultaLocalPorCodigo(int codLocal) throws Exception {

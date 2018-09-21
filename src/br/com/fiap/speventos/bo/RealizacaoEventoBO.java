@@ -60,6 +60,10 @@ public class RealizacaoEventoBO {
 		if (!DataBO.validacaoDataHora(realizacaoEvento.getDataHoraTermino())) {
 			return "Data/hora de termino invalida(s)";
 		}
+		
+		if(!DataBO.compararDtHrInicioTermino(realizacaoEvento.getDataHoraInicio(), realizacaoEvento.getDataHoraTermino())) {
+			return "Data de inicio maior que data de termino";
+		}
 					
 		RealizacaoEventoDAO dao = new RealizacaoEventoDAO();
 
@@ -76,19 +80,20 @@ public class RealizacaoEventoBO {
 			return "Evento relacionado a realizacao de evento nao existe";
 		} 
 		
+
 		Local localExiste = LocalBO.consultaLocalPorCodigo(realizacaoEvento.getLocal().getCodigoLocal());
-		System.out.println(localExiste.getCodigoLocal());
+//		System.out.println(localExiste.getCodigoLocal());
 		
-		String localValido = null;
+		String localValido = "";
 		
 		if(localExiste.getCodigoLocal() == 0) {
 			localValido = LocalBO.novoLocal(realizacaoEvento.getLocal());
 		}
-		
+		System.out.println(localValido);
 		String retorno = null;
 
-		if(localValido.equals("1 registro inserido") || localValido.equals(null)) {
-			retorno = dao.cadastrar(realizacaoEvento) + " registro inserido";
+		if(localValido.equals("1 registro cadastrado") || localValido.isEmpty()) {
+			retorno = dao.cadastrar(realizacaoEvento) + " registro cadastrado";
 		}
 		
 		dao.fechar();
@@ -147,6 +152,10 @@ public class RealizacaoEventoBO {
 		
 		if (!DataBO.validacaoDataHora(realizacaoEvento.getDataHoraTermino())) {
 			return "Data/hora de termino invalida(s)";
+		}
+		
+		if(!DataBO.compararDtHrInicioTermino(realizacaoEvento.getDataHoraInicio(), realizacaoEvento.getDataHoraTermino())) {
+			return "Data de inicio maior que data de termino";
 		}
 					
 		RealizacaoEventoDAO dao = new RealizacaoEventoDAO();

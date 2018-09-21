@@ -10,7 +10,9 @@ public class Excecao extends Exception {
 			return "Ocorreu um problema com o banco de dados. Espere alguns minutos e tente de novo.";	
 		} else if (e.getClass().getName().equals("java.sql.SQLSyntaxErrorException")) {
 			return "Erro de sintaxe no SQL";
-		} else if (e.getClass().getName().equals("java.lag.NumberFormatException")) {
+		} else if (e.getClass().getName().equals("java.sql.SQLIntegrityConstraintViolationException")) {
+			return "Uma valiacao do banco de dados foi violada";		
+		} else if (e.getClass().getName().equals("java.lang.NumberFormatException")) {
 			return "Formato de numero invalido";
 		} else {
 			return "Ocorreu um problema";

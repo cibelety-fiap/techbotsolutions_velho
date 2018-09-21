@@ -47,7 +47,8 @@ public class RealizacaoEventoDAO {
 	 */
 	public int cadastrar(RealizacaoEvento realizacaoEvento) throws Exception {
 		stmt = con.prepareStatement("INSERT INTO T_SGE_REALIZACAO_EVENTO "
-				+ "(CD_REALIZ_EVENTO, CD_EVENTO, CD_LOCAL, DT_HR_INICIO, DT_HR_TERMINO " + "VALUES (?,?,?,?,?)");
+				+ "(CD_REALIZ_EVENTO, CD_EVENTO, CD_LOCAL, DT_HR_INICIO, DT_HR_TERMINO) " 
+				+ "VALUES (?,?,?,TO_DATE(?,\'DD/MM/YYYY HH24:MI\'), TO_DATE(?,\'DD/MM/YYYY HH24:MI\'))");
 
 		stmt.setInt(1, realizacaoEvento.getCodigoRealizacaoEvento());
 		stmt.setInt(2, realizacaoEvento.getEvento().getCodigoEvento());
