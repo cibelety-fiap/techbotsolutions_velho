@@ -61,7 +61,7 @@ public class ColaboradorDAO {
 					rs.getInt("CD_USUARIO"),
 					rs.getString("DS_EMAIL"),
 					rs.getString("DS_SENHA"),
-					rs.getString("NM_PESSOA"),
+					rs.getString("NM_USUARIO"),
 					rs.getString("DS_NIVEL_ACESSO"),
 					rs.getString("DS_DEPARTAMENTO")
 					);

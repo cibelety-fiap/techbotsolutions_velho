@@ -60,7 +60,7 @@ public class UsuarioDAO {
 	}
 	
 	public Usuario logar(String email, String senha) throws Exception {
-		stmt = con.prepareStatement("SELECT CD_USUARIO, DS_EMAIL, DS_SENHA, NM_PESSOA FROM T_SGE_USUARIO "
+		stmt = con.prepareStatement("SELECT CD_USUARIO, DS_EMAIL, DS_SENHA, NM_USUARIO FROM T_SGE_USUARIO "
 				+ "WHERE DS_EMAIL=? AND DS_SENHA=?");
 		
 
@@ -74,7 +74,7 @@ public class UsuarioDAO {
 					rs.getInt("CD_USUARIO"),
 					rs.getString("DS_EMAIL"),
 					rs.getString("DS_SENHA"),
-					rs.getString("NM_PESSOA")
+					rs.getString("NM_USUARIO")
 					);
 		}
 		
