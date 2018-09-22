@@ -43,13 +43,13 @@ public class Login extends HttpServlet {
 				Colaborador colaborador = ColaboradorBO.consultaColaboradorPorCodigo(usuario.getCodigoUsuario());	
 				
 				if (colaborador.getCodigoUsuario() > 0) {		
-					RequestDispatcher dispatcher = request.getRequestDispatcher("loginColaborador.jsp");
+					RequestDispatcher dispatcher = request.getRequestDispatcher("tela_colaborador.jsp");
 					dispatcher.forward(request, response);
 					
 				} else {
 					
 
-					RequestDispatcher dispatcher = request.getRequestDispatcher("loginPessoaFisica.jsp");
+					RequestDispatcher dispatcher = request.getRequestDispatcher("tela_pessoa.jsp");
 					dispatcher.forward(request, response);	
 					writer.println(session.getId());
 					

@@ -2,16 +2,16 @@
 
 <body>
         <article style="float: left;">
-          <form id="form1">
-            <label>Login:</label>
+          <form action="Login" id="form1" method="POST">
+            <label>E-mail:</label>
             <br>
-            <input type="text" placeholder="Nome de usu&aacute;rio" name="usuario">
+            <input type="text" placeholder="Nome de usu&aacute;rio" name="email">
             <br><br>
             <label>Senha:</label>
             <br>
             <input type="password" placeholder="Senha" name="senha">
             <br><br>
-            <input type="button" onclick="Login()" class="tamanho_botao" value="Login" id="enviar">
+            <button class="tamanho_botao">Entrar</button>
             <input type="reset" name="reset" value="Reset" class="tamanho_botao">
           </form>
           <br>
