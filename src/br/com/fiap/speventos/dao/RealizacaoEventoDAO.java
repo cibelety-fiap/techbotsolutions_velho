@@ -91,19 +91,25 @@ public class RealizacaoEventoDAO {
 
 	public List<RealizacaoEvento> consultarPorNomeEvento(String nomeEvento) throws Exception {
 		List<RealizacaoEvento> listaRealizEvento = new ArrayList<RealizacaoEvento>();
-		stmt = con.prepareStatement("SELECT * FROM T_SGE_REALIZACAO_EVENTO " 
+		stmt = con.prepareStatement("SELECT T_SGE_REALIZACAO_EVENTO.CD_REALIZ_EVENTO, "
+								+ "T_SGE_REALIZACAO_EVENTO.CD_EVENTO, T_SGE_REALIZACAO_EVENTO.CD_LOCAL, " 
+								+ "TO_CHAR(T_SGE_REALIZACAO_EVENTO.DT_HR_INICIO,'DD/MM/YYYY HH24:MI') \"DT_HR_INICIO\", "  
+								+ "TO_CHAR(T_SGE_REALIZACAO_EVENTO.DT_HR_TERMINO,'DD/MM/YYYY HH24:MI') \"DT_HR_TERMINO\", "  
+								+ "T_SGE_EVENTO.DS_LINK_IMAGEM, T_SGE_EVENTO.NM_EVENTO, T_SGE_EVENTO.DS_TIPO_EVENTO, " 
+								+ "T_SGE_EVENTO.DS_SUBTIPO_EVENTO, T_SGE_EVENTO.DS_EVENTO, " 
+								+ "T_SGE_EVENTO.DS_CONTATO_MAIS_INFO, T_SGE_LOCAL.NM_LOCAL, T_SGE_LOCAL.DS_ENDERECO "
+				+ "FROM T_SGE_REALIZACAO_EVENTO " 
 				+ "INNER JOIN T_SGE_EVENTO ON "
 				+ "(T_SGE_REALIZACAO_EVENTO.CD_EVENTO=T_SGE_EVENTO.CD_EVENTO) " 
 				+ "INNER JOIN T_SGE_LOCAL ON "
 				+ "(T_SGE_REALIZACAO_EVENTO.CD_LOCAL=T_SGE_LOCAL.CD_LOCAL) " 
-				+ "WHERE NM_EVENTO LIKE ?");
+				+ "WHERE T_SGE_EVENTO.NM_EVENTO LIKE ?");
 
 		stmt.setString(1, "%" + nomeEvento + "%");
 
 		rs = stmt.executeQuery();
 
 		while (rs.next()) {
-
 			listaRealizEvento.add(new RealizacaoEvento(rs.getInt("CD_REALIZ_EVENTO"),
 					new Evento(rs.getInt("CD_EVENTO"), rs.getString("DS_LINK_IMAGEM"), rs.getString("NM_EVENTO"),
 							rs.getString("DS_TIPO_EVENTO"), rs.getString("DS_SUBTIPO_EVENTO"),

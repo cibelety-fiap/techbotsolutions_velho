@@ -100,7 +100,7 @@ public class RealizacaoEventoBO {
 		return retorno;
 	}
 
-	public static RealizacaoEvento consultaEventoPorCodigo(int codRealizEvento) throws Exception {
+	public static RealizacaoEvento consultaRealizEventoPorCodigo(int codRealizEvento) throws Exception {
 		if (codRealizEvento < 1 || codRealizEvento > 99999 ) {
 			return new RealizacaoEvento();
 		}
@@ -112,7 +112,7 @@ public class RealizacaoEventoBO {
 		return retorno;
 	}
 
-	public static List<RealizacaoEvento> consultaEventoPorNomeEvento(String nomeEvento) throws Exception {
+	public static List<RealizacaoEvento> consultaRealizEventoPorNomeEvento(String nomeEvento) throws Exception {
 
 		List<RealizacaoEvento> listaRealizacaoEvento = new ArrayList<RealizacaoEvento>();
 
@@ -121,7 +121,6 @@ public class RealizacaoEventoBO {
 		}
 		
 		nomeEvento = nomeEvento.toUpperCase();
-		
 		RealizacaoEventoDAO dao = new RealizacaoEventoDAO();
 		listaRealizacaoEvento = dao.consultarPorNomeEvento(nomeEvento);
 		dao.fechar();
