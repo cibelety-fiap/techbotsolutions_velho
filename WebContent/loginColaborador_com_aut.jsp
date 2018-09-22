@@ -57,7 +57,7 @@
         <a href="javascript:void(0); " style="font-size:15px; " class="icon " onclick="myFunction() ">&#9776;</a>
       </div>
         <article style="float:right;padding-right: 30%;">
-          <p>
+          <p>Colaborador <!-- alterar -->
            Olá, ${usuario.nome}.
            
            Bem vindo(a) ao nosso site!

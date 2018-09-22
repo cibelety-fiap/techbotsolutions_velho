@@ -5,7 +5,6 @@
 
   <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <link rel="stylesheet" type="text/css" href="css/style.css">
     <title>SP Eventos</title>
   </head>
@@ -56,11 +55,36 @@
         </div>
         <a href="javascript:void(0); " style="font-size:15px; " class="icon " onclick="myFunction() ">&#9776;</a>
       </div>
+        <article style="float: left;">
+          <form id="login" action="Login" method="POST" > <!-- alterar -->
+            <label>Login:</label>
+            <br>
+            <input type="text" placeholder="E-mail" name="email"><!-- alterar-->
+            <br><br>
+            <label>Senha:</label>
+            <br>
+            <input type="password" placeholder="Senha" name="senha">
+            <br><br>
+            <button>Enviar</button><!-- adicionar -->
+            <!-- <input type="button" onclick="Login()" class="tamanho_botao" value="Login" id="enviar">--><!--  remover -->
+            <input type="reset" name="reset" value="Reset" class="tamanho_botao">
+          </form>
+          <br>
+          <p>
+            Caso não tenha cadastro <a href="cadastro.html">Clique aqui</a>
+          </p>
+        </article>
         <article style="float:right;padding-right: 30%;">
           <p>
-           Olá, ${usuario.nome}.
-           
-           Bem vindo(a) ao nosso site!
+            Para fazer login como usuário:
+            <br> E-mail: <strong>user@user.com</strong><!-- alterar -->
+            <br> Senha: <strong>user</strong>
+          </p>
+          <br>
+          <p>
+            Para fazer login como administrador:
+            <br> E-mail: <strong>admin@admin.com</strong><!-- alterar -->
+            <br> Senha: <strong>admin</strong>
           </p>
         </article>
         <footer>Copyright &copy; 2018 SP Eventos </footer>

@@ -58,9 +58,7 @@
       </div>
         <article style="float:right;padding-right: 30%;">
           <p>
-           Olá, ${usuario.nome}.
-           
-           Bem vindo(a) ao nosso site!
+           Usuário e/ou senha incorretos
           </p>
         </article>
         <footer>Copyright &copy; 2018 SP Eventos </footer>
