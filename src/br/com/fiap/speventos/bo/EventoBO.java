@@ -81,8 +81,23 @@ public class EventoBO {
 		dao.fechar();
 		return listaEvento;
 	}
+	
+	public static List<Evento> consultaPorUsuario(int codUsuario) throws Exception {
 
-	public static String edicaoEvento(Evento evento, int codigoEvento) throws Exception {
+		List<Evento> listaEvento = new ArrayList<Evento>();
+		
+		if (codUsuario < 1 || codUsuario > 99999) {
+			return listaEvento;
+		}
+
+		EventoDAO dao = new EventoDAO();
+		listaEvento = dao.consultarPorUsuario(codUsuario);
+		
+		dao.fechar();
+		return listaEvento;
+	}
+
+	public static String edicaoEvento(Evento evento) throws Exception {
 		
 		if (evento.getCodigoEvento() < 1) {
 			return "Codigo de evento invalido";

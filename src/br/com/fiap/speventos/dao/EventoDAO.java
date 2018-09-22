@@ -76,6 +76,30 @@ public class EventoDAO {
 		}
 		return listaEvento;
 	}
+	
+	public List<Evento> consultarPorUsuario(int codUsuario) throws Exception {
+		List<Evento> listaEvento = new ArrayList<Evento>();
+		stmt = con.prepareStatement("SELECT * FROM T_SGE_ATUALIZACAO_EVENTO INNER JOIN "
+				+ "T_SGE_EVENTO ON "
+				+ "(T_SGE_ATUALIZACAO_EVENTO.CD_EVENTO=T_SGE_EVENTO.CD_EVENTO) "
+				+ "WHERE T_SGE_ATUALIZACAO_EVENTO.CD_USUARIO=?");
+
+		stmt.setInt(1, codUsuario);
+
+		rs = stmt.executeQuery();
+
+		while (rs.next()) {
+			listaEvento.add(new Evento(
+					rs.getInt("CD_EVENTO"), 
+					rs.getString("DS_LINK_IMAGEM"),
+					rs.getString("NM_EVENTO"), 
+					rs.getString("DS_TIPO_EVENTO"), 
+					rs.getString("DS_SUBTIPO_EVENTO"),
+					rs.getString("DS_EVENTO"), 
+					rs.getString("DS_CONTATO_MAIS_INFO")));
+		}
+		return listaEvento;
+	}
 
 	public int editar(Evento evento) throws Exception {
 		stmt = con.prepareStatement("UPDATE T_SGE_EVENTO "
