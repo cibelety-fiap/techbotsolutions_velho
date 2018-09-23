@@ -121,8 +121,8 @@ public class MessageServlet extends HttpServlet {
 		for (RespostaChatbot respostaTemp : listaResposta) {
 			String linkImagem = respostaTemp.getLinkImagem();
 			String nomeEvento = respostaTemp.getNomeEvento();
-			String resposta = "[\"<img src=\'" + linkImagem +"\' /><br />"
-					+ "<a href=\'" + nomeEvento + "\'>" + nomeEvento + "</a>";
+			String resposta = "[\"<img src=\'" + linkImagem +"\' /><br /><br />"
+					+ "<a href=\'" + nomeEvento + "\'><b>" + nomeEvento + "</b></a><br /><br />";
 
 			List<String> listaHorariosLocalPorFilme = respostaTemp.getHorariosLocalPorFilme();
 			for(String horariosPorLocalFilmeTemp : listaHorariosLocalPorFilme) {

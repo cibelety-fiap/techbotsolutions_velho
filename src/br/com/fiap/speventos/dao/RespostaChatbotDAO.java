@@ -84,7 +84,7 @@ public class RespostaChatbotDAO {
 			nomeLocal = rs.getString("NM_LOCAL");
 			
 			if (codEventoAnterior!=0 && codEvento!=codEventoAnterior) {
-				horariosLocalPorFilme = horariosLocalPorFilme + " " + nomeLocalAnterior;
+				horariosLocalPorFilme = horariosLocalPorFilme + " - " + nomeLocalAnterior;
 				listaHorariosLocalPorFilme.add(horariosLocalPorFilme);
 				RespostaChatbot respChatbot = 
 						new RespostaChatbot(nomeEventoAnterior, linkImagemAnterior, listaHorariosLocalPorFilme);
@@ -94,10 +94,12 @@ public class RespostaChatbotDAO {
 					horariosLocalPorFilme = horariosLocalPorFilme + " " 
 							+ horarioInicio;
 				} else {
-					horariosLocalPorFilme = horariosLocalPorFilme + " " + nomeLocalAnterior;
-					listaHorariosLocalPorFilme.add(horariosLocalPorFilme);
-					horariosLocalPorFilme = "";
-					horariosLocalPorFilme = horarioInicio;
+					if (!nomeLocalAnterior.isEmpty()) {
+						horariosLocalPorFilme = horariosLocalPorFilme + " - " + nomeLocalAnterior;
+						listaHorariosLocalPorFilme.add(horariosLocalPorFilme);
+					}
+						horariosLocalPorFilme = "";
+						horariosLocalPorFilme = horarioInicio;
 				}
 
 			}
@@ -106,7 +108,7 @@ public class RespostaChatbotDAO {
 			nomeEventoAnterior = nomeEvento;
 			linkImagemAnterior = linkImagem;
 		}
-		horariosLocalPorFilme = horariosLocalPorFilme + " " + nomeLocalAnterior;
+		horariosLocalPorFilme = horariosLocalPorFilme + " - " + nomeLocalAnterior;
 		listaHorariosLocalPorFilme.add(horariosLocalPorFilme);
 		RespostaChatbot respChatbot = 
 				new RespostaChatbot(nomeEventoAnterior, linkImagemAnterior, listaHorariosLocalPorFilme);
@@ -117,25 +119,4 @@ public class RespostaChatbotDAO {
 		return listaEventos;
 	}
 	
-//	public String retornarResposta(String nomeIntent, String tipo_filme, String dataHora) throws Exception {
-//		
-//		List<RespostaChatbot> listaResposta = new ArrayList<RespostaChatbot>();
-//		listaResposta = this.consultar(nomeIntent, tipo_filme, dataHora);
-//		
-//		for (RespostaChatbot respostaTemp : listaResposta) {
-//			String linkImagem = respostaTemp.getLinkImagem();
-//			String nomeEvento = respostaTemp.getNomeEvento();
-//			String resposta = "[\"<img src=\'" + linkImagem +"\' /><br />"
-//					+ "<a href=\'" + nomeEvento + "\'>" + nomeEvento + "</a>";
-//
-//			List<String> listaHorariosLocalPorFilme = respostaTemp.getHorariosLocalPorFilme();
-//			for(String horariosPorLocalFilmeTemp : listaHorariosLocalPorFilme) {
-//				resposta = resposta + horariosPorLocalFilmeTemp + "<br />";
-//			}
-//			resposta = resposta + "\"]";
-//			
-//			System.out.println(resposta);
-//			return resposta;
-//		}
-//	}
 }
