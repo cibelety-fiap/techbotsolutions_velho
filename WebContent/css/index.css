@@ -1,3 +1,8 @@
+/* Importing Google fonts */
+@import
+	url("https://fonts.googleapis.com/css?family=Nunito:300,400,700,800,900")
+	;
+
 body {
 	margin: 0;
 	padding: 0;
@@ -25,19 +30,19 @@ body {
 }
 
 .chatbot {
-	margin: 10px 40px;
-	padding: 10px 15px;
+	margin: 15px 40px;
+	padding: 3px 15px;
 	background: #214BB5;
 	color: white;
-	width: 200px;
+	width: 240px;
 	border-radius: 6px;
 	box-shadow: 0.05em 0.05em black;
 	float: left;
 }
 
 .chatuser {
-	margin: 10px 40px;
-	padding: 10px 15px;
+	margin: 15px 40px;
+	padding: 3px 15px;
 	background: #EEE7E0;
 	color: black;
 	width: 200px;
@@ -70,9 +75,9 @@ body {
 h2 {
 	text-align: center;
 	color: #fff;
-	font-family: Arial, helvetica;
+	font-family: 'nunito', sans-serif, arial;
 /*	text-transform: uppercase; */
-	font-size: 20px;
+	font-size: 24px;
 }
 
 button {
@@ -96,7 +101,7 @@ button:hover {
 
 .pulse {
 	width: 450px;
-	height: 300px;
+	height: 350px;
 	background: #fff;
 	color: #262626;
 /*	text-transform: uppercase; */
@@ -111,6 +116,10 @@ button:hover {
 
 a:link {
 	color: white;
+}
+
+.titulo_evento {
+	font-size: 18px;
 }
 
 @keyframes animate {

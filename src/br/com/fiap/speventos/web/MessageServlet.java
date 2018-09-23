@@ -88,15 +88,12 @@ public class MessageServlet extends HttpServlet {
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-			//"[\"<img src=\'img/incriveis2.png\' /><br /><a href=\'teste.html\'>Os Incriveis</a>\"]";
 			for (String respostaTemp : listaRespostasFormatadas) {
 				
 				respostaParaChatbot = respostaTemp;
-				
 //				respostaParaChatbot = "[\"<img src='img/os_incriveis2.png' /><br /><a href='OS INCRIVEIS 2'>OS INCRIVEIS 2</a> <br />18:20 SHOP. CENTER3<br />18:00 20:00 SHOP. CIDADE SAO PAULO<br />\"]";
 
 				System.out.println(respostaParaChatbot);
-				//resp.getWriter().write("[\"<img src=\'img/incriveis2.png\' /><br /><a href=\'teste.html\'>Os Incriveis</a>\"]");
 			}
 			contexto = null;
 			nomeIntent = "";
@@ -122,7 +119,7 @@ public class MessageServlet extends HttpServlet {
 			String linkImagem = respostaTemp.getLinkImagem();
 			String nomeEvento = respostaTemp.getNomeEvento();
 			String resposta = "[\"<img src=\'" + linkImagem +"\' /><br /><br />"
-					+ "<a href=\'" + nomeEvento + "\'><b>" + nomeEvento + "</b></a><br /><br />";
+					+ "<a href=\'" + nomeEvento + "\' class=\'titulo_evento\'><b>" + nomeEvento + "</b></a><br /><br />";
 
 			List<String> listaHorariosLocalPorFilme = respostaTemp.getHorariosLocalPorFilme();
 			for(String horariosPorLocalFilmeTemp : listaHorariosLocalPorFilme) {

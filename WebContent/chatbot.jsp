@@ -17,6 +17,6 @@
 			<button id="sendQuestion">Enviar</button>
 		</form>
 	</div>
-	<script type="text/javascript" src="js/main.js"></script>
+	<script type="text/javascript" src="js/chatbot.js"></script>
 </body>
 </html>

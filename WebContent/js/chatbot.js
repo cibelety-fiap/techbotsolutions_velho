@@ -27,7 +27,7 @@ function makePulse(element) {
 	element.classList.add("pulse-animation");
 	setTimeout(function() {
 		element.classList.remove("pulse-animation");
-	}, 2500);
+	}, 1200);
 }
 
 function callBot(message) {
@@ -35,13 +35,7 @@ function callBot(message) {
 	xhr.open("POST", "chat", true);
 	xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 	xhr.addEventListener("load", function() {
-/*		
-		if (xhr.status == 200) {
-			var respostas = JSON.parse(xhr.responseText);
-			respostas.forEach(function (resposta) { 
-				createMessage(resposta, "bot", true);
-			});
-*/
+
 		if (xhr.status == 200) {
 			var respostas = JSON.parse(xhr.responseText);
 			respostas.forEach(function (resposta) { 
@@ -77,7 +71,7 @@ function createImage(type) {
 function createText(text) {
 	var p = document.createElement("p");
 //	p.textContent = text;
-	p.innerHTML = text;
+	p.innerHTML = text; //alterei para aceitar codigo html
 	return p;
 }
 

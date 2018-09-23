@@ -91,7 +91,7 @@ public class RespostaChatbotDAO {
 				listaEventos.add(respChatbot);
 			} else {
 				if ((nomeLocal.equals(nomeLocalAnterior)) && (!nomeLocalAnterior.isEmpty())) {
-					horariosLocalPorFilme = horariosLocalPorFilme + " " 
+					horariosLocalPorFilme = horariosLocalPorFilme + " | " 
 							+ horarioInicio;
 				} else {
 					if (!nomeLocalAnterior.isEmpty()) {
