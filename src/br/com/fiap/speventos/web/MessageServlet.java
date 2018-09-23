@@ -37,7 +37,8 @@ public class MessageServlet extends HttpServlet {
 
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		ArrayList<String> listaRespostasFormatadas = new ArrayList<String>();
+//		ArrayList<String> listaRespostasFormatadas = new ArrayList<String>();
+		String respFormatadas = new String();
 		String message = req.getParameter("question");
 		if (message.isEmpty()) {
 			contexto = null;
@@ -54,8 +55,8 @@ public class MessageServlet extends HttpServlet {
 			chat.addBotMessage(text);
 		}
 		contexto = response.getContext();
-		resp.setContentType("application/json");
 		
+		resp.setContentType("application/json");
 		JSONArray jsonArrayIntents = new JSONArray(response.getIntents());
 		System.out.println(jsonArrayIntents);
 
@@ -84,53 +85,56 @@ public class MessageServlet extends HttpServlet {
 		if (nomeIntent.equals("CINEMA") && !tipo_filme.isEmpty() && !dia.isEmpty() && !horario.isEmpty()) {
 			
 			try {
-				listaRespostasFormatadas = this.buscarRespostas(nomeIntent, tipo_filme, dia + " " + horario);
+				respFormatadas = this.buscarRespostas(nomeIntent, tipo_filme, dia + " " + horario);
+				respostaParaChatbot = respFormatadas;
+//				Exemplo de String com imagem e link para ser enviada para chatbot
+//				respostaParaChatbot = "[\"<img src='img/os_incriveis2.png' /><br /><a href='OS INCRIVEIS 2'>OS INCRIVEIS 2</a> <br />18:20 SHOP. CENTER3<br />18:00 20:00 SHOP. CIDADE SAO PAULO<br />\"]";
+				System.out.println(respostaParaChatbot);
+				contexto = null;
+				nomeIntent = "";
+				tipo_filme = "";
+				dia = "";
+				horario = "";
+				
 			} catch (Exception e) {
 				e.printStackTrace();
-			}
-			for (String respostaTemp : listaRespostasFormatadas) {
-				
-				respostaParaChatbot = respostaTemp;
-//				respostaParaChatbot = "[\"<img src='img/os_incriveis2.png' /><br /><a href='OS INCRIVEIS 2'>OS INCRIVEIS 2</a> <br />18:20 SHOP. CENTER3<br />18:00 20:00 SHOP. CIDADE SAO PAULO<br />\"]";
 
-				System.out.println(respostaParaChatbot);
 			}
-			contexto = null;
-			nomeIntent = "";
-			tipo_filme = "";
-			dia = "";
-			horario = "";
 		} else {
 			respostaParaChatbot = new Gson().toJson(response.getOutput().getText());
 		}
 		resp.setContentType("text/html");
 		resp.getWriter().write(respostaParaChatbot);
-		
-
 	}
 	
-	private ArrayList<String> buscarRespostas(String nomeIntent, String tipo_filme, String dataHora) throws Exception {
-		ArrayList<String> listaRespostasFormatadas = new ArrayList<String>(); 
-		RespostaChatbotDAO dao = new RespostaChatbotDAO();	
-//			System.out.println(nomeIntent + " " + tipo_filme + " " + dia + " " + horario);
+	private String buscarRespostas(String nomeIntent, String tipo_filme, String dataHora) throws Exception {
+//		ArrayList<String> listaRespostasFormatadas = new ArrayList<String>();
+		String respostasFormatadas = new String();
+		RespostaChatbotDAO dao = new RespostaChatbotDAO();
+//		Imprime na console infos sobre os dados enviados para consulta
+//		System.out.println(nomeIntent + " " + tipo_filme + " " + dia + " " + horario);
 		List<RespostaChatbot> listaResposta = dao.consultar(nomeIntent, tipo_filme, dia + " " + horario);
-		
+			
 		for (RespostaChatbot respostaTemp : listaResposta) {
+			if (respostaTemp.getNomeEvento().isEmpty()) {
+				return "[\"Desculpe, não encontramos um filme parecido com o que você deseja.\"]";
+			}
 			String linkImagem = respostaTemp.getLinkImagem();
 			String nomeEvento = respostaTemp.getNomeEvento();
-			String resposta = "[\"<img src=\'" + linkImagem +"\' /><br /><br />"
+			String resposta = "<img src=\'" + linkImagem +"\' /><br /><br />"
 					+ "<a href=\'" + nomeEvento + "\' class=\'titulo_evento\'><b>" + nomeEvento + "</b></a><br /><br />";
 
 			List<String> listaHorariosLocalPorFilme = respostaTemp.getHorariosLocalPorFilme();
 			for(String horariosPorLocalFilmeTemp : listaHorariosLocalPorFilme) {
 				resposta = resposta + horariosPorLocalFilmeTemp + "<br />";
 			}
-			resposta = resposta + "\"]";
-			
-		//	System.out.println(resposta);
-			listaRespostasFormatadas.add(resposta);
+			resposta = resposta + "<br />";
+//			Imprime a resposta montada na console	
+//		  	System.out.println(resposta);
+			respostasFormatadas = respostasFormatadas + resposta;
 		}
-		return listaRespostasFormatadas;
+		respostasFormatadas = "[\"" +respostasFormatadas + "\"]";
+		return respostasFormatadas;
 	}
 
 	private MessageResponse conversationAPI(String input, Context context) {
@@ -141,8 +145,8 @@ public class MessageServlet extends HttpServlet {
 
 		MessageOptions newMessageOptions = new MessageOptions.Builder().workspaceId(workspaceId)
 				.input(new InputData.Builder(input).build()).context(context).build();
-		//Imprimir para visualizar o que esta sendo enviado para o chatbot tratar e responder
-		//System.out.println(newMessageOptions);
+//		Imprime o que esta sendo enviado para o chatbot tratar e responder
+//		System.out.println(newMessageOptions);
 		
 		MessageResponse response = service.message(newMessageOptions).execute();
 

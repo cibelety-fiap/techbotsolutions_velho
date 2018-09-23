@@ -32,8 +32,10 @@ public class RespostaChatbotDAO {
 	}
 
 	public List<RespostaChatbot> consultar(String intencao, String subtipo, String dataHora) throws Exception {
+	
 		ArrayList<RespostaChatbot> listaEventos = new ArrayList<RespostaChatbot>();
-
+		ArrayList<String> listaHorariosLocalPorFilme = new ArrayList<String>();
+		
 		int codEvento = 0;
 		int codEventoAnterior = 0;
 		String nomeEvento = new String();
@@ -42,7 +44,7 @@ public class RespostaChatbotDAO {
 		String linkImagemAnterior = new String();
 		String horarioInicio = new String();
 		String horariosLocalPorFilme = new String();
-		ArrayList<String> listaHorariosLocalPorFilme = new ArrayList<String>();
+
 		String nomeLocal = new String();
 		String nomeLocalAnterior = new String();
 
@@ -54,7 +56,7 @@ public class RespostaChatbotDAO {
 						+ "WHERE T_SGE_EVENTO.DS_TIPO_EVENTO=? " + "AND T_SGE_EVENTO.DS_SUBTIPO_EVENTO=? "
 						+ "AND DT_HR_INICIO BETWEEN (TO_DATE(?,'YYYY-MM-DD HH24:MI:SS') - interval '1' hour) "
 						+ "AND (TO_DATE(?,'YYYY-MM-DD HH24:MI:SS') + interval '2' hour) "
-						+ "ORDER BY T_SGE_EVENTO.CD_EVENTO, T_SGE_LOCAL.NM_LOCAL, T_SGE_REALIZACAO_EVENTO.DT_HR_INICIO");
+						+ "ORDER BY T_SGE_EVENTO.CD_EVENTO, T_SGE_LOCAL.NM_LOCAL, DT_HR_INICIO");
 
 		stmt.setString(1, intencao);
 		stmt.setString(2, subtipo);
@@ -88,10 +90,15 @@ public class RespostaChatbotDAO {
 				listaHorariosLocalPorFilme.add(horariosLocalPorFilme);
 				RespostaChatbot respChatbot = 
 						new RespostaChatbot(nomeEventoAnterior, linkImagemAnterior, listaHorariosLocalPorFilme);
+				for (String x2 : listaHorariosLocalPorFilme) {
+					System.out.println(x2);
+				}
 				listaEventos.add(respChatbot);
-			} else {
+				listaHorariosLocalPorFilme = new ArrayList<String>();
+				nomeLocalAnterior = "";
+			}
 				if ((nomeLocal.equals(nomeLocalAnterior)) && (!nomeLocalAnterior.isEmpty())) {
-					horariosLocalPorFilme = horariosLocalPorFilme + " | " 
+					horariosLocalPorFilme = horariosLocalPorFilme + "&nbsp;&nbsp;" 
 							+ horarioInicio;
 				} else {
 					if (!nomeLocalAnterior.isEmpty()) {
@@ -102,17 +109,22 @@ public class RespostaChatbotDAO {
 						horariosLocalPorFilme = horarioInicio;
 				}
 
-			}
+		
 			codEventoAnterior = codEvento;
 			nomeLocalAnterior = nomeLocal;
 			nomeEventoAnterior = nomeEvento;
 			linkImagemAnterior = linkImagem;
 		}
 		horariosLocalPorFilme = horariosLocalPorFilme + " - " + nomeLocalAnterior;
+		System.out.println(horariosLocalPorFilme);
 		listaHorariosLocalPorFilme.add(horariosLocalPorFilme);
 		RespostaChatbot respChatbot = 
 				new RespostaChatbot(nomeEventoAnterior, linkImagemAnterior, listaHorariosLocalPorFilme);
 		listaEventos.add(respChatbot);
+		for (String x2 : listaHorariosLocalPorFilme) {
+			System.out.println(x2 + "final");
+		}
+		listaHorariosLocalPorFilme = new ArrayList<String>();
 
 		System.out.println(listaEventos.size() + " elementos em listaEventos");
 
