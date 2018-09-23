@@ -10,7 +10,7 @@ import java.util.List;
 import br.com.fiap.speventos.beans.RespostaChatbot;
 import br.com.fiap.speventos.conexao.Conexao;
 
-public class ChatDAO {
+public class RespostaChatbotDAO {
 
 	private Connection con;
 	private PreparedStatement stmt;
@@ -27,19 +27,22 @@ public class ChatDAO {
 	 *             Chamada da excecao checked SQLException
 	 */
 
-	public ChatDAO() throws Exception {
+	public RespostaChatbotDAO() throws Exception {
 		con = new Conexao().conectar();
 	}
 
 	public List<RespostaChatbot> consultar(String intencao, String subtipo, String dataHora) throws Exception {
-		List<RespostaChatbot> listaEventos = new ArrayList<RespostaChatbot>();
+		ArrayList<RespostaChatbot> listaEventos = new ArrayList<RespostaChatbot>();
 
 		int codEvento = 0;
 		int codEventoAnterior = 0;
 		String nomeEvento = new String();
+		String nomeEventoAnterior = new String();
 		String linkImagem = new String();
-		ArrayList<String> horariosPorLocal = new ArrayList<String>();
-		ArrayList<ArrayList<String>> horariosLocalPorFilme = new ArrayList<ArrayList<String>>();
+		String linkImagemAnterior = new String();
+		String horarioInicio = new String();
+		String horariosLocalPorFilme = new String();
+		ArrayList<String> listaHorariosLocalPorFilme = new ArrayList<String>();
 		String nomeLocal = new String();
 		String nomeLocalAnterior = new String();
 
@@ -75,41 +78,64 @@ public class ChatDAO {
 
 		while (rs.next()) {
 			codEvento = rs.getInt("CD_EVENTO");
+			nomeEvento = rs.getString("NM_EVENTO");
+			linkImagem = rs.getString("DS_LINK_IMAGEM");
+			horarioInicio = new SimpleDateFormat("HH:mm").format(rs.getTime("DT_HR_INICIO"));
 			nomeLocal = rs.getString("NM_LOCAL");
-			if (codEvento != codEventoAnterior) {
-				if (codEventoAnterior != 0) {
-					listaEventos.add(new RespostaChatbot(nomeEvento, linkImagem, horariosLocalPorFilme));
-				}
-				nomeEvento = rs.getString("NM_EVENTO");
-				linkImagem = rs.getString("DS_LINK_IMAGEM");
-				horariosPorLocal.add(new  SimpleDateFormat("HH:mm").format(rs.getTime("DT_HR_INICIO")));
+			
+			if (codEventoAnterior!=0 && codEvento!=codEventoAnterior) {
+				horariosLocalPorFilme = horariosLocalPorFilme + " " + nomeLocalAnterior;
+				listaHorariosLocalPorFilme.add(horariosLocalPorFilme);
+				RespostaChatbot respChatbot = 
+						new RespostaChatbot(nomeEventoAnterior, linkImagemAnterior, listaHorariosLocalPorFilme);
+				listaEventos.add(respChatbot);
 			} else {
-				if (nomeLocal == nomeLocalAnterior) {
-					horariosPorLocal.add(new  SimpleDateFormat("HH:mm").format(rs.getTime("DT_HR_INICIO")));
+				if ((nomeLocal.equals(nomeLocalAnterior)) && (!nomeLocalAnterior.isEmpty())) {
+					horariosLocalPorFilme = horariosLocalPorFilme + " " 
+							+ horarioInicio;
 				} else {
-					horariosPorLocal.add(nomeLocalAnterior);
-					horariosLocalPorFilme.add(horariosPorLocal);
-					horariosPorLocal.clear();
-					horariosPorLocal.add(new  SimpleDateFormat("HH:mm").format(rs.getTime("DT_HR_INICIO")));
+					horariosLocalPorFilme = horariosLocalPorFilme + " " + nomeLocalAnterior;
+					listaHorariosLocalPorFilme.add(horariosLocalPorFilme);
+					horariosLocalPorFilme = "";
+					horariosLocalPorFilme = horarioInicio;
 				}
 
 			}
 			codEventoAnterior = codEvento;
 			nomeLocalAnterior = nomeLocal;
-			System.out.println(codEvento + " " + nomeEvento + " " + linkImagem + " " +
-					horariosPorLocal + " " + nomeLocal);
+			nomeEventoAnterior = nomeEvento;
+			linkImagemAnterior = linkImagem;
 		}
-		listaEventos.add(new RespostaChatbot(nomeEvento, linkImagem, horariosLocalPorFilme));
+		horariosLocalPorFilme = horariosLocalPorFilme + " " + nomeLocalAnterior;
+		listaHorariosLocalPorFilme.add(horariosLocalPorFilme);
+		RespostaChatbot respChatbot = 
+				new RespostaChatbot(nomeEventoAnterior, linkImagemAnterior, listaHorariosLocalPorFilme);
+		listaEventos.add(respChatbot);
 
-//APAGAR
 		System.out.println(listaEventos.size() + " elementos em listaEventos");
-/*		
-		for (RespostaChatbot evento: listaEventos ) {
-			System.out.println(evento.getNomeEvento());
-			System.out.println(evento.getLinkImagem());
-			System.out.println(evento.getHorariosLocalPorFilme());
-		}
-*/
+
 		return listaEventos;
 	}
+	
+//	public String retornarResposta(String nomeIntent, String tipo_filme, String dataHora) throws Exception {
+//		
+//		List<RespostaChatbot> listaResposta = new ArrayList<RespostaChatbot>();
+//		listaResposta = this.consultar(nomeIntent, tipo_filme, dataHora);
+//		
+//		for (RespostaChatbot respostaTemp : listaResposta) {
+//			String linkImagem = respostaTemp.getLinkImagem();
+//			String nomeEvento = respostaTemp.getNomeEvento();
+//			String resposta = "[\"<img src=\'" + linkImagem +"\' /><br />"
+//					+ "<a href=\'" + nomeEvento + "\'>" + nomeEvento + "</a>";
+//
+//			List<String> listaHorariosLocalPorFilme = respostaTemp.getHorariosLocalPorFilme();
+//			for(String horariosPorLocalFilmeTemp : listaHorariosLocalPorFilme) {
+//				resposta = resposta + horariosPorLocalFilmeTemp + "<br />";
+//			}
+//			resposta = resposta + "\"]";
+//			
+//			System.out.println(resposta);
+//			return resposta;
+//		}
+//	}
 }

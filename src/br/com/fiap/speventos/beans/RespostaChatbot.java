@@ -1,33 +1,23 @@
 package br.com.fiap.speventos.beans;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class RespostaChatbot {
 
 	private String nomeEvento;
 	private String linkImagem;
-	private List<ArrayList<String>> horariosLocalPorFilme = new ArrayList<ArrayList<String>>();
+	private ArrayList<String> horariosLocalPorFilme;
 
 	public RespostaChatbot() {
 	}
 
-	public RespostaChatbot(String nomeEvento, String linkImagem, List<ArrayList<String>> horariosLocalPorFilme) {
+	public RespostaChatbot(String nomeEvento, String linkImagem, ArrayList<String> horariosLocalPorFilme) {
+		super();
 		this.nomeEvento = nomeEvento;
 		this.linkImagem = linkImagem;
 		this.horariosLocalPorFilme = horariosLocalPorFilme;
 	}
 
-	public String getAll() {
-		String todosEventos = new String();
-		for (ArrayList<String> horariosPorLocal: horariosLocalPorFilme) {
-			for (String horarioOuLocal: horariosPorLocal) {
-				todosEventos = todosEventos + " " + horarioOuLocal;
-			}
-		}
-		return nomeEvento + "\n" + linkImagem + "\n" + todosEventos;
-	}
-	
 	public String getNomeEvento() {
 		return nomeEvento;
 	}
@@ -44,11 +34,11 @@ public class RespostaChatbot {
 		this.linkImagem = linkImagem;
 	}
 
-	public List<ArrayList<String>> getHorariosLocalPorFilme() {
+	public ArrayList<String> getHorariosLocalPorFilme() {
 		return horariosLocalPorFilme;
 	}
 
-	public void setHorariosLocalPorFilme(List<ArrayList<String>> horariosLocalPorFilme) {
+	public void setHorariosLocalPorFilme(ArrayList<String> horariosLocalPorFilme) {
 		this.horariosLocalPorFilme = horariosLocalPorFilme;
 	}
 

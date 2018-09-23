@@ -1,6 +1,7 @@
 package br.com.fiap.speventos.web;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -20,8 +21,7 @@ import com.ibm.watson.developer_cloud.conversation.v1.model.MessageResponse;
 
 import br.com.fiap.speventos.beans.RespostaChatbot;
 import br.com.fiap.speventos.chat.Chat;
-import br.com.fiap.speventos.dao.ChatDAO;
-import br.com.fiap.speventos.excecao.Excecao;
+import br.com.fiap.speventos.dao.RespostaChatbotDAO;
 
 @WebServlet(urlPatterns = "/chat")
 public class MessageServlet extends HttpServlet {
@@ -37,6 +37,7 @@ public class MessageServlet extends HttpServlet {
 
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		ArrayList<String> listaRespostasFormatadas = new ArrayList<String>();
 		String message = req.getParameter("question");
 		if (message.isEmpty()) {
 			contexto = null;
@@ -81,32 +82,58 @@ public class MessageServlet extends HttpServlet {
 		}
 
 		if (nomeIntent.equals("CINEMA") && !tipo_filme.isEmpty() && !dia.isEmpty() && !horario.isEmpty()) {
-
+			
 			try {
-				ChatDAO dao = new ChatDAO();
-				
-				System.out.println(nomeIntent + " " + tipo_filme + " " + dia + " " + horario);
-				List<RespostaChatbot> respostas = dao.consultar(nomeIntent, tipo_filme, dia + " " + horario);
-				for (RespostaChatbot resposta : respostas) {
-					System.out.println(resposta.getAll());
-				}
-				respostaParaChatbot = "[\"<img src=\'img/incriveis2.png\' /><br />"
-						+ "<a href=\'teste.html\'>Os Incriveis</a>\"]";
+				listaRespostasFormatadas = this.buscarRespostas(nomeIntent, tipo_filme, dia + " " + horario);
 			} catch (Exception e) {
-				// e.printStackTrace();
-				System.out.println(Excecao.tratarExcecao(e));
-			} finally {
-				nomeIntent = "";
-				tipo_filme = "";
-				dia = "";
-				horario = "";
+				e.printStackTrace();
 			}
+			//"[\"<img src=\'img/incriveis2.png\' /><br /><a href=\'teste.html\'>Os Incriveis</a>\"]";
+			for (String respostaTemp : listaRespostasFormatadas) {
+				
+				respostaParaChatbot = respostaTemp;
+				
+//				respostaParaChatbot = "[\"<img src='img/os_incriveis2.png' /><br /><a href='OS INCRIVEIS 2'>OS INCRIVEIS 2</a> <br />18:20 SHOP. CENTER3<br />18:00 20:00 SHOP. CIDADE SAO PAULO<br />\"]";
+
+				System.out.println(respostaParaChatbot);
+				//resp.getWriter().write("[\"<img src=\'img/incriveis2.png\' /><br /><a href=\'teste.html\'>Os Incriveis</a>\"]");
+			}
+			contexto = null;
+			nomeIntent = "";
+			tipo_filme = "";
+			dia = "";
+			horario = "";
 		} else {
 			respostaParaChatbot = new Gson().toJson(response.getOutput().getText());
 		}
-
+		resp.setContentType("text/html");
 		resp.getWriter().write(respostaParaChatbot);
+		
 
+	}
+	
+	private ArrayList<String> buscarRespostas(String nomeIntent, String tipo_filme, String dataHora) throws Exception {
+		ArrayList<String> listaRespostasFormatadas = new ArrayList<String>(); 
+		RespostaChatbotDAO dao = new RespostaChatbotDAO();	
+//			System.out.println(nomeIntent + " " + tipo_filme + " " + dia + " " + horario);
+		List<RespostaChatbot> listaResposta = dao.consultar(nomeIntent, tipo_filme, dia + " " + horario);
+		
+		for (RespostaChatbot respostaTemp : listaResposta) {
+			String linkImagem = respostaTemp.getLinkImagem();
+			String nomeEvento = respostaTemp.getNomeEvento();
+			String resposta = "[\"<img src=\'" + linkImagem +"\' /><br />"
+					+ "<a href=\'" + nomeEvento + "\'>" + nomeEvento + "</a>";
+
+			List<String> listaHorariosLocalPorFilme = respostaTemp.getHorariosLocalPorFilme();
+			for(String horariosPorLocalFilmeTemp : listaHorariosLocalPorFilme) {
+				resposta = resposta + horariosPorLocalFilmeTemp + "<br />";
+			}
+			resposta = resposta + "\"]";
+			
+		//	System.out.println(resposta);
+			listaRespostasFormatadas.add(resposta);
+		}
+		return listaRespostasFormatadas;
 	}
 
 	private MessageResponse conversationAPI(String input, Context context) {
