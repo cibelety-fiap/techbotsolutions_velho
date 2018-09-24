@@ -7,18 +7,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 import br.com.fiap.speventos.beans.AtualizacaoEvento;
-import br.com.fiap.speventos.beans.Evento;
+import br.com.fiap.speventos.beans.Evento_antigo;
 import br.com.fiap.speventos.beans.Usuario;
 import br.com.fiap.speventos.conexao.Conexao;
 
 /**
  * Classe para manipular a tabela T_SGE_ATUALIZACAO_EVENTO
- * Possui metodos para: cadastrar, consultarPorCodigo, consultarPorCodigoEvento, editar, remover
+ * Possui metodos para: cadastrar, consultarPorCodigo, consultarPorCodigoEvento, 
+ * editar, remover, fechar conexao.
  * @author Techbot Solutions
  * @version 1.0
  * @since 1.0
  * @see AtualizacaoEvento
- * @see Evento
+ * @see Evento_antigo
  * @see Usuario
  * @see AtualizacaoEventoBO
  *
@@ -67,7 +68,7 @@ public class AtualizacaoEventoDAO {
 	  * um registro na tabela T_SGE_ATUALIZACAO_EVENTO
 	  * @author Techbot Solutions
 	  * @param codigoAtualizacaoEvento recebe um objeto do tipo int
-	  * @return um objeto AtualizacaoEvento
+	  * @return um objeto do tipo AtualizacaoEvento
 	  * @throws Exception - Chamada da excecao Exception
 	  */
 	public AtualizacaoEvento consultar(int codigoAtualizacaoEvento) throws Exception {
@@ -85,7 +86,7 @@ public class AtualizacaoEventoDAO {
 		if (rs.next()) {
 			return new AtualizacaoEvento(
 					rs.getInt("CD_ATUALIZ_EVENTO"),
-					new Evento(rs.getInt("CD_EVENTO"), 
+					new Evento_antigo(rs.getInt("CD_EVENTO"), 
 							rs.getString("DS_LINK_IMAGEM"), rs.getString("NM_EVENTO"),
 							rs.getString("DS_TIPO_EVENTO"), rs.getString("DS_SUBTIPO_EVENTO"),
 							rs.getString("DS_EVENTO"), rs.getString("DS_CONTATO_MAIS_INFO")),
@@ -104,7 +105,7 @@ public class AtualizacaoEventoDAO {
 	  * @return uma lista com objetos do tipo atualizacao de evento
 	  * @throws Exception - Chamada da excecao Exception
 	  */
-	public List<AtualizacaoEvento> consultarPorCodigoEvento(int codEvento) throws Exception {
+	public List<AtualizacaoEvento> consultarPorCodigoEvento(int codigoEvento) throws Exception {
 		List<AtualizacaoEvento> listaAtualizacaoEvento = new ArrayList<AtualizacaoEvento>();
 		
 		stmt = con.prepareStatement(
@@ -113,14 +114,14 @@ public class AtualizacaoEventoDAO {
 				+ "INNER JOIN T_SGE_USUARIO ON "
 				+ "(T_SGE_ATUALIZACAO_EVENTO.CD_USUARIO=T_SGE_USUARIO.CD_USUARIO) "
 				+ "WHERE T_SGE_ATUALIZACAO_EVENTO.CD_EVENTO=?");
-		stmt.setInt(1, codEvento);
+		stmt.setInt(1, codigoEvento);
 
 		rs = stmt.executeQuery();
 
 		while (rs.next()) {
 			listaAtualizacaoEvento.add(new AtualizacaoEvento(
 					rs.getInt("CD_ATUALIZ_EVENTO"),
-					new Evento(rs.getInt("CD_EVENTO"), rs.getString("DS_LINK_IMAGEM"), rs.getString("NM_EVENTO"),
+					new Evento_antigo(rs.getInt("CD_EVENTO"), rs.getString("DS_LINK_IMAGEM"), rs.getString("NM_EVENTO"),
 							rs.getString("DS_TIPO_EVENTO"), rs.getString("DS_SUBTIPO_EVENTO"),
 							rs.getString("DS_EVENTO"), rs.getString("DS_CONTATO_MAIS_INFO")),
 					new Usuario(rs.getInt("CD_USUARIO"), rs.getString("DS_EMAIL"), rs.getString("DS_SENHA"),

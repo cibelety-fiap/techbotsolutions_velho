@@ -3,7 +3,7 @@ package br.com.fiap.speventos.bo;
 import java.util.ArrayList;
 import java.util.List;
 
-import br.com.fiap.speventos.beans.Evento_cibele;
+import br.com.fiap.speventos.beans.Evento;
 import br.com.fiap.speventos.beans.Local;
 import br.com.fiap.speventos.beans.RealizacaoEvento;
 import br.com.fiap.speventos.dao.RealizacaoEventoDAO;
@@ -74,7 +74,7 @@ public class RealizacaoEventoBO {
 			return "Realizacao de evento ja existe";
 		}
 
-		Evento_cibele eventoExiste = EventoBO_cibele.consultaEvento(realizacaoEvento.getEvento().getCodigoEvento());
+		Evento eventoExiste = EventoBO_cibele.consultaEvento(realizacaoEvento.getEvento().getCodigoEvento());
 		
 		if(eventoExiste.getCodigoEvento() == 0) {
 			return "Evento relacionado a realizacao de evento nao existe";
@@ -159,7 +159,7 @@ public class RealizacaoEventoBO {
 					
 		RealizacaoEventoDAO dao = new RealizacaoEventoDAO();
 
-		Evento_cibele eventoExiste = EventoBO_cibele.consultaEvento(realizacaoEvento.getCodigoRealizacaoEvento());
+		Evento eventoExiste = EventoBO_cibele.consultaEvento(realizacaoEvento.getCodigoRealizacaoEvento());
 		
 		if(eventoExiste.getCodigoEvento() == 0) {
 			return "Evento relacionado a realizacao de evento nao existe";

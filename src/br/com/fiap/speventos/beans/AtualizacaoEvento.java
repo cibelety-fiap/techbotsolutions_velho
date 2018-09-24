@@ -2,7 +2,7 @@ package br.com.fiap.speventos.beans;
 
 public class AtualizacaoEvento implements Comparable<AtualizacaoEvento> {
 	private int codigoAtualizacaoEvento;
-	private Evento evento;
+	private Evento_antigo evento;
 	private Usuario usuario;
 	private String dataHoraAtualizacao;
 	private String tipoAtualizacao;
@@ -15,7 +15,7 @@ public class AtualizacaoEvento implements Comparable<AtualizacaoEvento> {
 		super();
 	}
 
-	public AtualizacaoEvento(int codigoAtualizacaoEvento, Evento evento, Usuario usuario, String dataHoraAtualizacao,
+	public AtualizacaoEvento(int codigoAtualizacaoEvento, Evento_antigo evento, Usuario usuario, String dataHoraAtualizacao,
 			String tipoAtualizacao) {
 		super();
 		setCodigoAtualizacaoEvento(codigoAtualizacaoEvento);
@@ -33,11 +33,11 @@ public class AtualizacaoEvento implements Comparable<AtualizacaoEvento> {
 		this.codigoAtualizacaoEvento = codigoAtualizacaoEvento;
 	}
 
-	public Evento getEvento() {
+	public Evento_antigo getEvento() {
 		return evento;
 	}
 
-	public void setEvento(Evento evento) {
+	public void setEvento(Evento_antigo evento) {
 		this.evento = evento;
 	}
 

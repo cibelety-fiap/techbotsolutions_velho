@@ -3,16 +3,16 @@ package br.com.fiap.speventos.bo;
 import java.util.ArrayList;
 import java.util.List;
 
-import br.com.fiap.speventos.beans.Evento;
-import br.com.fiap.speventos.dao.EventoDAO_cibele;
+import br.com.fiap.speventos.beans.Evento_antigo;
+import br.com.fiap.speventos.dao.EventoDAO;
 
 /**
  * Classe para validar e padronizar dados para a tabela T_SGE_EVENTO
  * @version 1.0
  * @since 1.0
  * @author Techbot Solutions
- * @see Evento
- * @see EventoDAO_cibele
+ * @see Evento_antigo
+ * @see EventoDAO
  *
  */
 
@@ -36,7 +36,7 @@ public class EventoBO {
 	 *
 	 */
 	
-	public static String novoEvento(Evento evento) throws Exception {
+	public static String novoEvento(Evento_antigo evento) throws Exception {
 		if (evento.getCodigoEvento() < 1 || evento.getCodigoEvento() > 99999) {
 			return "Codigo de evento invalido";
 		}
@@ -66,9 +66,9 @@ public class EventoBO {
 		evento.setTipoEvento(evento.getTipoEvento().toUpperCase());
 		evento.setDescricaoEvento(evento.getDescricaoEvento().toUpperCase());
 
-		EventoDAO_cibele dao = new EventoDAO_cibele();
+		EventoDAO dao = new EventoDAO();
 
-		Evento eventoCodRepetido = dao.consultar(evento.getCodigoEvento());
+		Evento_antigo eventoCodRepetido = dao.consultar(evento.getCodigoEvento());
 
 		if (eventoCodRepetido.getCodigoEvento() > 0) {
 			return "Evento já existe";
@@ -91,14 +91,14 @@ public class EventoBO {
 	 * @throws Exception - Chamada da excecao checked
 	 */
 
-	public static Evento consultaEvento(int codigoEvento) throws Exception {
+	public static Evento_antigo consultaEvento(int codigoEvento) throws Exception {
 		if (codigoEvento < 1) {
-			return new Evento();
+			return new Evento_antigo();
 		}
 
-		EventoDAO_cibele dao = new EventoDAO_cibele();
+		EventoDAO dao = new EventoDAO();
 
-		Evento retorno = dao.consultar(codigoEvento);
+		Evento_antigo retorno = dao.consultar(codigoEvento);
 
 		dao.fechar();
 		return retorno;
@@ -115,8 +115,8 @@ public class EventoBO {
 	 * @throws Exception - Chamada da exceção checked
 	 */
 
-	public static List<Evento> consultaPorNome(String nomeEvento) throws Exception {
-		List<Evento> listaEvento = new ArrayList<Evento>();
+	public static List<Evento_antigo> consultaPorNome(String nomeEvento) throws Exception {
+		List<Evento_antigo> listaEvento = new ArrayList<Evento_antigo>();
 		
 		if (nomeEvento.isEmpty() || nomeEvento.length() > 80 ) {
 			return listaEvento;
@@ -124,7 +124,7 @@ public class EventoBO {
 		
 		nomeEvento = nomeEvento.toUpperCase();
 
-		EventoDAO_cibele dao = new EventoDAO_cibele();
+		EventoDAO dao = new EventoDAO();
 		listaEvento = dao.consultarPorNomeEvento(nomeEvento);
 		
 		dao.fechar();
@@ -148,7 +148,7 @@ public class EventoBO {
 	 */
 	
 
-	public static String edicaoEvento(Evento evento, int codigoEvento) throws Exception {
+	public static String edicaoEvento(Evento_antigo evento, int codigoEvento) throws Exception {
 		if (evento.getCodigoEvento() < 1 || evento.getCodigoEvento() > 99999) {
 			return "Codigo de evento invalido";
 		}
@@ -177,7 +177,7 @@ public class EventoBO {
 		evento.setTipoEvento(evento.getTipoEvento().toUpperCase());
 		evento.setDescricaoEvento(evento.getDescricaoEvento().toUpperCase());
 
-		EventoDAO_cibele dao = new EventoDAO_cibele();
+		EventoDAO dao = new EventoDAO();
 
 		String retorno = null;
 
@@ -202,7 +202,7 @@ public class EventoBO {
 			return "Codigo invalido";
 		}
 		
-		EventoDAO_cibele dao = new EventoDAO_cibele();
+		EventoDAO dao = new EventoDAO();
 		
 		int retorno = dao.remover(codigoEvento);
 		dao.fechar();

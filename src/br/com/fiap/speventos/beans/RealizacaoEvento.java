@@ -3,7 +3,7 @@ package br.com.fiap.speventos.beans;
 public class RealizacaoEvento {
 
 	private int codigoRealizacaoEvento;
-	private Evento_cibele evento;
+	private Evento evento;
 	private Local local;
 	private String dataHoraInicio;
 	private String dataHoraTermino;
@@ -11,7 +11,7 @@ public class RealizacaoEvento {
 	public RealizacaoEvento() {
 	}
 
-	public RealizacaoEvento(int codigoRealizacaoEvento, Evento_cibele evento, Local local, String dataHoraInicio,
+	public RealizacaoEvento(int codigoRealizacaoEvento, Evento evento, Local local, String dataHoraInicio,
 			String dataHoraTermino) {
 		super();
 		this.codigoRealizacaoEvento = codigoRealizacaoEvento;
@@ -29,11 +29,11 @@ public class RealizacaoEvento {
 		this.codigoRealizacaoEvento = codigoRealizacaoEvento;
 	}
 
-	public Evento_cibele getEvento() {
+	public Evento getEvento() {
 		return evento;
 	}
 
-	public void setEvento(Evento_cibele evento) {
+	public void setEvento(Evento evento) {
 		this.evento = evento;
 	}
 

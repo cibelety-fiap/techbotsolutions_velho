@@ -14,7 +14,8 @@ import br.com.fiap.speventos.conexao.Conexao;
 
 /**
  * Classe para manipular a tabela T_SGE_ATUALIZACAO_NOTICIA
- * Possui metodos para: cadastrar, consultarPorCodigo, consultarPorCodigoNoticia, editar, remover
+ * Possui metodos para: cadastrar, consultarPorCodigo, consultarPorCodigoNoticia, 
+ * editar, remover, fechar conexao.
  * @author Techbot Solutions
  * @version 1.0
  * @since 1.0
@@ -66,7 +67,7 @@ public class AtualizacaoNoticiaDAO {
 	  * um registro na tabela T_SGE_ATUALIZACAO_NOTICIA
 	  * @author Techbot Solutions
 	  * @param codigoAtualizacaoNoticia recebe um objeto do tipo int
-	  * @return um objeto AtualizacaoNoticia
+	  * @return um objeto do tipo AtualizacaoNoticia
 	  * @throws Exception - Chamada da excecao Exception
 	  */
 	public AtualizacaoNoticia consultar(int codigoAtualizacaoNoticia) throws Exception {
@@ -105,7 +106,7 @@ public class AtualizacaoNoticiaDAO {
 	  * @return uma lista com objetos do tipo atualizacao de noticia
 	  * @throws Exception - Chamada da excecao Exception
 	  */
-	public List<AtualizacaoNoticia> consultarPorCodigoNoticia(String codNoticia) throws Exception {
+	public List<AtualizacaoNoticia> consultarPorCodigoNoticia(String codigoNoticia) throws Exception {
 		List<AtualizacaoNoticia> listaAtualizacaoNoticia = new ArrayList<AtualizacaoNoticia>();
 
 		stmt = con.prepareStatement("SELECT * FROM T_SGE_ATUALIZACAO_NOTICIA "
@@ -114,7 +115,7 @@ public class AtualizacaoNoticiaDAO {
 				+ "INNER JOIN T_SGE_COLABORADOR ON "
 				+ "(T_SGE_ATUALIZACAO_NOTICIA.CD_USUARIO=T_SGE_COLABORADOR.CD_USUARIO) "
 				+ "WHERE T_SGE_ATUALIZACAO_NOTICIA.CD_NOTICIA=?");
-		stmt.setString(1, codNoticia);
+		stmt.setString(1, codigoNoticia);
 
 		while (rs.next()) {
 			listaAtualizacaoNoticia.add(new AtualizacaoNoticia(

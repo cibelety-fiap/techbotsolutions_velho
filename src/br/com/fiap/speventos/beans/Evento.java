@@ -1,50 +1,28 @@
 package br.com.fiap.speventos.beans;
 
-public class Evento implements Comparable<Evento> {
-
+public class Evento {
 	private int codigoEvento;
 	private String linkImagem;
 	private String nomeEvento;
 	private String tipoEvento;
 	private String subtipoEvento;
 	private String descricaoEvento;
-	private String contatoInfo;
-	
-	
-	public int compareTo(Evento outro) {
-		return this.nomeEvento.compareTo(outro.nomeEvento);
-	}
+	private String contatoMaisInfo;
 
 	public Evento() {
-		super();
+
 	}
 
 	public Evento(int codigoEvento, String linkImagem, String nomeEvento, String tipoEvento, String subtipoEvento,
-			String descricaoEvento, String contatoInfo) {
+			String descricaoEvento, String contatoMaisInfo) {
 		super();
-		setCodigoEvento(codigoEvento);
-		setLinkImagem(linkImagem);
-		setNomeEvento(nomeEvento);
-		setTipoEvento(tipoEvento);
-		setSubtipoEvento(subtipoEvento);
-		setDescricaoEvento(descricaoEvento);
-		setContatoInfo(contatoInfo);
-	}
-
-	public String getAll() {
-		return codigoEvento + "\n" + linkImagem + "\n" + nomeEvento + "\n" + tipoEvento + "\n" + subtipoEvento + "\n"
-				+ descricaoEvento + "\n" + contatoInfo;
-	}
-
-	public void setAll(int codigoEvento, String linkImagem, String nomeEvento, String tipoEvento, String subtipoEvento,
-			String descricaoEvento, String contatoInfo) {
-		setCodigoEvento(codigoEvento);
-		setLinkImagem(linkImagem);
-		setNomeEvento(nomeEvento);
-		setTipoEvento(tipoEvento);
-		setSubtipoEvento(subtipoEvento);
-		setDescricaoEvento(descricaoEvento);
-		setContatoInfo(contatoInfo);
+		this.codigoEvento = codigoEvento;
+		this.linkImagem = linkImagem;
+		this.nomeEvento = nomeEvento;
+		this.tipoEvento = tipoEvento;
+		this.subtipoEvento = subtipoEvento;
+		this.descricaoEvento = descricaoEvento;
+		this.contatoMaisInfo = contatoMaisInfo;
 	}
 
 	public int getCodigoEvento() {
@@ -95,12 +73,12 @@ public class Evento implements Comparable<Evento> {
 		this.descricaoEvento = descricaoEvento;
 	}
 
-	public String getContatoInfo() {
-		return contatoInfo;
+	public String getContatoMaisInfo() {
+		return contatoMaisInfo;
 	}
 
-	public void setContatoInfo(String contatoInfo) {
-		this.contatoInfo = contatoInfo;
+	public void setContatoMaisInfo(String contatoMaisInfo) {
+		this.contatoMaisInfo = contatoMaisInfo;
 	}
 
 }

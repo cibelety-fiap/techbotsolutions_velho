@@ -3,11 +3,11 @@ package br.com.fiap.speventos.bo;
 import java.util.ArrayList;
 import java.util.List;
 
-import br.com.fiap.speventos.beans.Evento_cibele;
-import br.com.fiap.speventos.dao.EventoDAO_cibele;
+import br.com.fiap.speventos.beans.Evento;
+import br.com.fiap.speventos.dao.EventoDAO;
 
 public class EventoBO_cibele {
-	public static String novoEvento(Evento_cibele evento) throws Exception {
+	public static String novoEvento(Evento evento) throws Exception {
 
 		if (evento.getCodigoEvento() < 1) {
 			return "Codigo de evento invalido";
@@ -31,9 +31,9 @@ public class EventoBO_cibele {
 			return "Contato mais info invalido";
 		}
 		
-		EventoDAO_cibele dao = new EventoDAO_cibele();
+		EventoDAO dao = new EventoDAO();
 
-		Evento_cibele eventoCodRepetido = dao.consultar(evento.getCodigoEvento());
+		Evento eventoCodRepetido = dao.consultar(evento.getCodigoEvento());
 
 		if (eventoCodRepetido.getCodigoEvento() > 0) {
 			return "Evento já existe";
@@ -52,52 +52,52 @@ public class EventoBO_cibele {
 		return retorno;
 	}
 
-	public static Evento_cibele consultaEvento(int codigoEvento) throws Exception {
+	public static Evento consultaEvento(int codigoEvento) throws Exception {
 		if (codigoEvento < 1) {
-			return new Evento_cibele();
+			return new Evento();
 		}
 
-		EventoDAO_cibele dao = new EventoDAO_cibele();
+		EventoDAO dao = new EventoDAO();
 
-		Evento_cibele retorno = dao.consultar(codigoEvento);
+		Evento retorno = dao.consultar(codigoEvento);
 
 		dao.fechar();
 		return retorno;
 
 	}
 
-	public static List<Evento_cibele> consultaPorNome(String nomeEvento) throws Exception {
+	public static List<Evento> consultaPorNome(String nomeEvento) throws Exception {
 
-		List<Evento_cibele> listaEvento = new ArrayList<Evento_cibele>();
+		List<Evento> listaEvento = new ArrayList<Evento>();
 		
 		if (nomeEvento.isEmpty() || nomeEvento.length() > 80 ) {
 			return listaEvento;
 		}
 		
 		nomeEvento = nomeEvento.toUpperCase();
-		EventoDAO_cibele dao = new EventoDAO_cibele();
+		EventoDAO dao = new EventoDAO();
 		listaEvento = dao.consultarPorNomeEvento(nomeEvento);
 		
 		dao.fechar();
 		return listaEvento;
 	}
 	
-	public static List<Evento_cibele> consultaPorUsuario(int codUsuario) throws Exception {
+	public static List<Evento> consultaPorUsuario(int codUsuario) throws Exception {
 
-		List<Evento_cibele> listaEvento = new ArrayList<Evento_cibele>();
+		List<Evento> listaEvento = new ArrayList<Evento>();
 		
 		if (codUsuario < 1 || codUsuario > 99999) {
 			return listaEvento;
 		}
 
-		EventoDAO_cibele dao = new EventoDAO_cibele();
+		EventoDAO dao = new EventoDAO();
 		listaEvento = dao.consultarPorUsuario(codUsuario);
 		
 		dao.fechar();
 		return listaEvento;
 	}
 
-	public static String edicaoEvento(Evento_cibele evento) throws Exception {
+	public static String edicaoEvento(Evento evento) throws Exception {
 		
 		if (evento.getCodigoEvento() < 1) {
 			return "Codigo de evento invalido";
@@ -121,7 +121,7 @@ public class EventoBO_cibele {
 			return "Contato mais info invalido";
 		}
 
-		EventoDAO_cibele dao = new EventoDAO_cibele();
+		EventoDAO dao = new EventoDAO();
 
 		String retorno = dao.editar(evento) + "registro editado";
 		
@@ -142,7 +142,7 @@ public class EventoBO_cibele {
 			return "Codigo invalido";
 		}
 		
-		EventoDAO_cibele dao = new EventoDAO_cibele();
+		EventoDAO dao = new EventoDAO();
 
 		String retorno = dao.remover(codigoEvento) + "registro removido";
 

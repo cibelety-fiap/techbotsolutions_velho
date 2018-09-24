@@ -5,7 +5,7 @@ import java.util.List;
 
 
 import br.com.fiap.speventos.beans.AtualizacaoEvento;
-import br.com.fiap.speventos.beans.Evento;
+import br.com.fiap.speventos.beans.Evento_antigo;
 import br.com.fiap.speventos.beans.Usuario;
 import br.com.fiap.speventos.dao.AtualizacaoEventoDAO;
 
@@ -16,7 +16,7 @@ import br.com.fiap.speventos.dao.AtualizacaoEventoDAO;
  * @author Techbot Solutions
  * @see AtualizacaoEvento
  * @see Usuario
- * @see Evento
+ * @see Evento_antigo
  * @see AtualizacaoEventoDAO
  *  
  *
@@ -40,7 +40,7 @@ public class AtualizacaoEventoBO {
 	 */
 	
 	public static String novaAtualizacaoEvento(AtualizacaoEvento atualizacaoEvento, Usuario codigoUsuario,
-			Evento codigoEvento) throws Exception {
+			Evento_antigo codigoEvento) throws Exception {
 		if (atualizacaoEvento.getTipoAtualizacao().isEmpty() || atualizacaoEvento.getTipoAtualizacao().length() < 30) {
 			return "Tipo de atualizacao de evento errada";
 		}

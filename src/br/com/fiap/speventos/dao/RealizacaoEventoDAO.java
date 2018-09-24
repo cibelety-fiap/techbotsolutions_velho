@@ -6,7 +6,7 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
-import br.com.fiap.speventos.beans.Evento_cibele;
+import br.com.fiap.speventos.beans.Evento;
 import br.com.fiap.speventos.beans.Local;
 import br.com.fiap.speventos.beans.RealizacaoEvento;
 import br.com.fiap.speventos.conexao.Conexao;
@@ -79,7 +79,7 @@ public class RealizacaoEventoDAO {
 
 		if (rs.next()) {
 			return new RealizacaoEvento(rs.getInt("CD_REALIZ_EVENTO"),
-					new Evento_cibele(rs.getInt("CD_EVENTO"), rs.getString("DS_LINK_IMAGEM"), rs.getString("NM_EVENTO"),
+					new Evento(rs.getInt("CD_EVENTO"), rs.getString("DS_LINK_IMAGEM"), rs.getString("NM_EVENTO"),
 							rs.getString("DS_TIPO_EVENTO"), rs.getString("DS_SUBTIPO_EVENTO"),
 							rs.getString("DS_EVENTO"), rs.getString("DS_CONTATO_MAIS_INFO")),
 					new Local(rs.getInt("CD_LOCAL"), rs.getString("NM_LOCAL"), rs.getString("DS_ENDERECO")),
@@ -111,7 +111,7 @@ public class RealizacaoEventoDAO {
 
 		while (rs.next()) {
 			listaRealizEvento.add(new RealizacaoEvento(rs.getInt("CD_REALIZ_EVENTO"),
-					new Evento_cibele(rs.getInt("CD_EVENTO"), rs.getString("DS_LINK_IMAGEM"), rs.getString("NM_EVENTO"),
+					new Evento(rs.getInt("CD_EVENTO"), rs.getString("DS_LINK_IMAGEM"), rs.getString("NM_EVENTO"),
 							rs.getString("DS_TIPO_EVENTO"), rs.getString("DS_SUBTIPO_EVENTO"),
 							rs.getString("DS_EVENTO"), rs.getString("DS_CONTATO_MAIS_INFO")),
 					new Local(rs.getInt("CD_LOCAL"), rs.getString("NM_LOCAL"), rs.getString("DS_ENDERECO")),
