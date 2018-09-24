@@ -7,7 +7,7 @@
 </head>
 
 <%
-	List<Evento> listaEvento = (List<Evento>) request.getAttribute("LISTA_EVENTO");
+	List<Evento_cibele> listaEvento = (List<Evento_cibele>) request.getAttribute("LISTA_EVENTO");
 %>
 
 <body>
@@ -20,7 +20,7 @@
 			<th>Descricao</th>
 		</tr>
 		<%
-			for (Evento eventoTemp : listaEvento) {
+			for (Evento_cibele eventoTemp : listaEvento) {
 		%>
 
 		<tr>

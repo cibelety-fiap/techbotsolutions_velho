@@ -8,15 +8,15 @@ public class UsuarioBO {
 	public static String novoUsuario(Usuario usuario) throws Exception{
 
 		if(usuario.getCodigoUsuario()<=0) {
-			return "Código inválido";
+			return "Cï¿½digo invï¿½lido";
 		}
 
 		if(usuario.getNome().isEmpty() || usuario.getNome().length()>60) {
-			return "Nome inválido";
+			return "Nome invï¿½lido";
 		}
 
 		if(usuario.getEmail().isEmpty() || usuario.getEmail().length()>60) {
-			return "Email inválido";
+			return "Email invï¿½lido";
 		}
 
 		if(usuario.getEmail().indexOf("@")<0 || usuario.getEmail().indexOf(".")<0) {
@@ -24,7 +24,7 @@ public class UsuarioBO {
 		}
 
 		if(usuario.getSenha().length()<8 || usuario.getSenha().length()>20) {
-			return "Senha inválida";
+			return "Senha invï¿½lida";
 		}
 
 		usuario.setNome(usuario.getNome().toUpperCase());
@@ -36,7 +36,7 @@ public class UsuarioBO {
 
 		//		if(resultado.getCodigoUsuario()>0) {
 		//			dao.fechar();
-		//			return "Usuário já existe";
+		//			return "Usuï¿½rio jï¿½ existe";
 		//		}
 
 		//O QUE RETORNAR? CLOSE+"USUARIO CADASTRADO"?
@@ -47,7 +47,7 @@ public class UsuarioBO {
 	public static Usuario login(String email, String senha) throws Exception{
 		
 		//RNs, validacoes, etc
-		
+		email = email.toUpperCase();
 		UsuarioDAO dao = new UsuarioDAO();
 		Usuario usuario = dao.logar(email, senha);
 		dao.fechar();

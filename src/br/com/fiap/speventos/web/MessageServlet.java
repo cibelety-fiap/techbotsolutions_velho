@@ -122,7 +122,7 @@ public class MessageServlet extends HttpServlet {
 			String linkImagem = respostaTemp.getLinkImagem();
 			String nomeEvento = respostaTemp.getNomeEvento();
 			String resposta = "<img src=\'" + linkImagem +"\' /><br /><br />"
-					+ "<a href=\'" + nomeEvento + "\' class=\'titulo_evento\'><b>" + nomeEvento + "</b></a><br /><br />";
+					+ "<a href=\'filme/" + nomeEvento.toLowerCase().replaceAll("\\s+","") + ".jsp\' target=\'_blank\' class=\'titulo_evento\'><b>" + nomeEvento + "</b></a><br /><br />";
 
 			List<String> listaHorariosLocalPorFilme = respostaTemp.getHorariosLocalPorFilme();
 			for(String horariosPorLocalFilmeTemp : listaHorariosLocalPorFilme) {
