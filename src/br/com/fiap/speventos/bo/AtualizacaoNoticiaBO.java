@@ -68,7 +68,7 @@ public class AtualizacaoNoticiaBO {
 
 		}
 
-		dao.cadastrar(atualizacaoNoticia, codigoColaborador, codigoNoticia);
+		dao.cadastrar(atualizacaoNoticia);
 		dao.fechar();
 
 		return "OK";

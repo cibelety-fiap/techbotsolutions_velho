@@ -63,7 +63,7 @@ public class AtualizacaoEventoBO {
 
 		}
 
-		dao.cadastrar(atualizacaoEvento, codigoUsuario, codigoEvento);
+		dao.cadastrar(atualizacaoEvento);
 		dao.fechar();
 
 		return "OK";

@@ -174,7 +174,7 @@ public class AtualizacaoEventoDAO {
 	}
 	
 	/**
-	  * Metodo construtor que fecha a comunicacao com o banco de dados
+	  * Metodo que fecha a comunicacao com o banco de dados
 	  * @author Techbot Solutions
 	  * @param nao possui parametros
 	  * @return nao ha retorno
