@@ -7,22 +7,21 @@ public class Evento {
 	private String tipoEvento;
 	private String subtipoEvento;
 	private String descricaoEvento;
-	private String contatoMaisInfo;
+	private String contatoInfo;
 
 	public Evento() {
 
 	}
 
 	public Evento(int codigoEvento, String linkImagem, String nomeEvento, String tipoEvento, String subtipoEvento,
-			String descricaoEvento, String contatoMaisInfo) {
-		super();
+			String descricaoEvento, String contatoInfo) {
 		this.codigoEvento = codigoEvento;
 		this.linkImagem = linkImagem;
 		this.nomeEvento = nomeEvento;
 		this.tipoEvento = tipoEvento;
 		this.subtipoEvento = subtipoEvento;
 		this.descricaoEvento = descricaoEvento;
-		this.contatoMaisInfo = contatoMaisInfo;
+		this.contatoInfo = contatoInfo;
 	}
 
 	public int getCodigoEvento() {
@@ -73,12 +72,11 @@ public class Evento {
 		this.descricaoEvento = descricaoEvento;
 	}
 
-	public String getContatoMaisInfo() {
-		return contatoMaisInfo;
+	public String getContatoInfo() {
+		return contatoInfo;
 	}
 
-	public void setContatoMaisInfo(String contatoMaisInfo) {
-		this.contatoMaisInfo = contatoMaisInfo;
+	public void setContatoInfo(String contatoInfo) {
+		this.contatoInfo = contatoInfo;
 	}
-
 }

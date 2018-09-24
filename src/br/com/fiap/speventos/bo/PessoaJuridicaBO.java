@@ -1,15 +1,37 @@
 package br.com.fiap.speventos.bo;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import br.com.fiap.speventos.beans.PessoaJuridica;
+import br.com.fiap.speventos.dao.PessoaDAO;
 import br.com.fiap.speventos.dao.PessoaJuridicaDAO;
+import br.com.fiap.speventos.dao.UsuarioDAO;
 
+/**
+ *  Classe para validar e padronizar dados para a tabela T_SGE_PESSOA_JURIDICA
+ *  @version 1.0
+ *  @since 1.0
+ *  @author Techbot Solutions
+ *  @see PessoaJuridicaDAO
+ *  @see PessoaJuridica
+ */
 public class PessoaJuridicaBO {
 
+	/**
+	 * Metodo para verificar regras de negocio, validacoes e padronizacoes 
+	 * relacionadas a insercao de uma nova PessoaJuridica
+	 * Regras de negocio validadas:
+	 * tamanho do nome do usuario, tamanho do codigo do usuario, tamanho do email do usuario,
+	 * se o email tem '@' ou '.', tamanho da senha
+	 * @author Techbot Solutions
+	 * @param recebe objetos do tipo Usuario, Pessoa, PessoaJuridica
+	 * @return uma String com a quantidade de registros inseridos ou o erro ocorrido
+	 * @throws Exception - Chamada da excecao Exception
+	 */
 	public static String novoPessoaJuridica(PessoaJuridica pessoaJuridica) throws Exception {
 
-		if(pessoaJuridica.getCodigoUsuario()<1) {
+		if(pessoaJuridica.getCodigoUsuario() <1 || pessoaJuridica.getCodigoUsuario() > 99999) {
 			return "Código inválido";
 		}
 
@@ -56,39 +78,92 @@ public class PessoaJuridicaBO {
 		pessoaJuridica.setRazaoSocial((pessoaJuridica.getRazaoSocial().toUpperCase()));
 		pessoaJuridica.setEndereco(pessoaJuridica.getEndereco().toUpperCase());
 
-		PessoaJuridicaDAO dao = new PessoaJuridicaDAO();
+		UsuarioDAO userdao = new UsuarioDAO();
+		PessoaDAO pdao = new PessoaDAO();
+		PessoaJuridicaDAO pjdao = new PessoaJuridicaDAO();
+		 
+		PessoaJuridica resultado = pjdao.consultarPorCodigo(pessoaJuridica.getCodigoUsuario());
 
-		String retorno =  dao.cadastrar(pessoaJuridica) + "registro inserido";
+		if(resultado.getCodigoUsuario()>0) {
+			pjdao.fechar();
+			return "Usuário já existe";
+		}
 
-		dao.fechar();
-		return retorno;
+		userdao.cadastrar(pessoaJuridica);
+		pdao.cadastrar(pessoaJuridica);
+		pjdao.cadastrar(pessoaJuridica);
+		String retorno = pjdao.cadastrar(pessoaJuridica) + "registro inserido";
+
+		pjdao.fechar();
+		return retorno + "registro inserido";
 	}
 
+	/**
+	 * Metodo para validar e fazer pesquisa de codigo de usuario 
+	 * relacionadas a consulta de um codigo de usuario 
+	 * Regras de negocio validadas:
+	 * existencia do codigo no banco de dados
+	 * @author Techbot Solutions
+	 * @param PessoaFisicaJuridica recebe objetos do tipo PessoaJuridica
+	 * @return resultado da consulta ou objeto PessoaJuridica
+	 * @throws Exception - Chamada da excecao Exception
+	 */
 	public static PessoaJuridica consultaPessoaJuridicaPorCodigo(int codigo) throws Exception{
 
+		if(codigo <1 || codigo > 99999) {
+			return new PessoaJuridica();
+		}
+		
 		PessoaJuridicaDAO dao = new PessoaJuridicaDAO();
 
 		PessoaJuridica retorno = dao.consultarPorCodigo(codigo);
 
-		//fazer comparacao codigo, se <1 codigo invalido
-
 		dao.fechar();
 		return retorno;
 	}
 
-	public static List<PessoaJuridica> consultaPessoaJuridicaPorNome(int nome) throws Exception{
+	/**
+	 * Metodo para validar e fazer pesquisa de nome de usuario 
+	 * relacionadas a consulta de um nome de usuario 
+	 * Regras de negocio validadas:
+	 * validade do nome dentro do banco de dados e padronizacao para upperCase
+	 * @author Techbot Solutions
+	 * @param PessoaJuridica recebe objetos do tipo PessoaJuridica
+	 * @return resultado da consulta ou objeto listaPessoaJuridica
+	 * @throws Exception - Chamada da excecao Exception
+	 */
+	public static List<PessoaJuridica> consultaPessoaJuridicaPorNome(String nome) throws Exception{
 
+		List<PessoaJuridica> listaPessoaJuridica = new ArrayList<PessoaJuridica>();
+		
+		if(nome.isEmpty() || nome.length()>60) {
+			return listaPessoaJuridica;
+		}
+		
+		nome = nome.toUpperCase();
+		
 		PessoaJuridicaDAO dao = new PessoaJuridicaDAO();
 
-		List<PessoaJuridica> listaPessoaJuridica = dao.consultarPorNome(nome);
+		listaPessoaJuridica = dao.consultarPorNome(nome);
 
 		dao.fechar();
 		return listaPessoaJuridica;
 	}
 
+	/**
+	 * Metodo para verificar regras de negocio, validacoes e padronizacoes 
+	 * relacionadas a edicao de um antigo PessoaJuridica
+	 * Regras de negocio validadas:
+	 * tamanho do nome do usuario, tamanho do codigo do usuario, tamanho do email do usuario,
+	 * se o email tem '@' ou '.', tamanho da senha
+	 * @author Techbot Solutions
+	 * @param PessoaJuridicaBO recebe objetos do tipo PessoaJuridica, Pessoa e Usuario
+	 * @return uma String com a quantidade de registros inseridos ou o erro ocorrido
+	 * @throws Exception - Chamada da excecao Exception
+	 */
 	public static String edicaoPessoaJuridica(PessoaJuridica pessoaJuridica) throws Exception{
 
-		if(pessoaJuridica.getCodigoUsuario()<1) {
+		if(pessoaJuridica.getCodigoUsuario() <1 || pessoaJuridica.getCodigoUsuario() > 99999) {
 			return "Código inválido";
 		}
 
@@ -135,24 +210,53 @@ public class PessoaJuridicaBO {
 		pessoaJuridica.setRazaoSocial((pessoaJuridica.getRazaoSocial().toUpperCase()));
 		pessoaJuridica.setEndereco(pessoaJuridica.getEndereco().toUpperCase());
 
-		PessoaJuridicaDAO dao = new PessoaJuridicaDAO();
+		UsuarioDAO userdao = new UsuarioDAO();
+		PessoaDAO pdao = new PessoaDAO();
+		PessoaJuridicaDAO pjdao = new PessoaJuridicaDAO();
+		
+		PessoaJuridica resultado = pjdao.consultarPorCodigo(pessoaJuridica.getCodigoUsuario());
 
-		String retorno =  dao.editar(pessoaJuridica) + "registro inserido";
+		if(resultado.getCodigoUsuario()>0) {
+			pjdao.fechar();
+			return "Usuário já existe";
+		}
+		
+		userdao.editar(pessoaJuridica);
+		pdao.editar(pessoaJuridica);
+		pjdao.editar(pessoaJuridica);
 
-		dao.fechar();
+		String retorno =  pjdao.editar(pessoaJuridica) + "registro editado";
+
+		pjdao.fechar();
 		return retorno;
 	}
+	
+	/**
+	 * Metodo para remover um usuario do banco de dados 
+	 * Regras de negocio validadas:
+	 * validade do codigo
+	 * @author Techbot Solutions
+	 * @param PessoaJuridicaBO recebe objetos do tipo PessoaJuridica, Pessoa e Usuario
+	 * @return uma String com a quantidade de registros inseridos ou o erro ocorrido
+	 * @throws Exception - Chamada da excecao Exception
+	 */
 	public static String remocaoPessoaJuridica(int pessoaJuridica) throws Exception{
+		
+		if(pessoaJuridica < 1 || pessoaJuridica > 99999) {
+			return "Código inválido";
+		}
 
-		PessoaJuridicaDAO dao = new PessoaJuridicaDAO();
+		UsuarioDAO userdao = new UsuarioDAO();
+		PessoaDAO pdao = new PessoaDAO();
+		PessoaJuridicaDAO pjdao = new PessoaJuridicaDAO();
+		
+		userdao.remover(pessoaJuridica);
+		pdao.remover(pessoaJuridica);
+		pjdao.remover(pessoaJuridica);
+		
+		String retorno = pjdao.remover(pessoaJuridica) + "registro removido";
 
-		String retorno = null;
-
-		//fazer if para comparacao do codigo, se <1 o codigo é invalido
-
-		retorno = dao.remover(pessoaJuridica) + "registro removido";
-
-		dao.fechar();
+		pjdao.fechar();
 		return retorno;
 	}
 }

@@ -6,9 +6,11 @@ public class Local {
 	private String enderecoLocal;
 
 	public Local() {
+		super();
 	}
 
 	public Local(int codigoLocal, String nomeLocal, String enderecoLocal) {
+		super();
 		this.codigoLocal = codigoLocal;
 		this.nomeLocal = nomeLocal;
 		this.enderecoLocal = enderecoLocal;

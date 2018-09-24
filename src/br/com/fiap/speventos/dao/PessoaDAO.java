@@ -2,35 +2,62 @@ package br.com.fiap.speventos.dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 
 import br.com.fiap.speventos.beans.Pessoa;
 import br.com.fiap.speventos.conexao.Conexao;
 
-public class PessoaDAO extends UsuarioDAO {
+/**
+ * Classe para manipular a tabela T_SGE_PESSOA 
+ * Possui métodos para: cadastrar, editar, remover
+ * @author Techbot Solutions
+ * @version 1.0
+ * @since 1.0
+ * @see PessoaBO
+ * @see Pessoa
+ * @see Usuario
+ */
+public class PessoaDAO {
 
 	private Connection con;
 	private PreparedStatement stmt;
-	private ResultSet rs;
 
+	/**
+	 * Método construtor que estabelece a comunicacao com o banco de dados
+	 * @author Techbot Solutions
+	 * @param nao possui parametros
+	 * @return nao ha retorno
+	 * @throws Exception - Chamada da excecao Exception
+	 */
 	public PessoaDAO() throws Exception {
 		con = new Conexao().conectar();
 	}
-	
-public String cadastrar(Pessoa pessoa) throws Exception {
-		
+
+	/**
+	 * Metodo para adicionar um registro na tabela T_SGE_PESSOA
+	 * @author Techbot Solutions
+	 * @param pessoa recebe um objeto do tipo Pessoa (Beans)
+	 * @return um int com a quantidade de registros inseridos
+	 * @throws Exception - Chamada da excecao Exception
+	 */
+	public String cadastrar(Pessoa pessoa) throws Exception {
+
 		stmt = con.prepareStatement("INSERT INTO T_SGE_PESSOA (NR_TELEFONE, DS_ENDERECO)"
 				+ " VALUES (?, ?)");
-		
+
 		stmt.setLong(1, pessoa.getTelefone());
 		stmt.setString(2, pessoa.getEndereco());
-		
-		stmt.executeUpdate();
-		
-		return "Cadastro Realizado";
+
+		return stmt.executeUpdate() + "Cadastro Realizado";
 	}
 
-	public int editar(int nome) throws Exception {
+	/**
+	 * Metodo para editar um registro na tabela T_SGE_PESSOA
+	 * @author Techbot Solutions
+	 * @param pessoa recebe um objeto do tipo Pessoa
+	 * @return um int com a quantidade de registros editados
+	 * @throws Exception - Chamada da excecao Exception
+	 */
+	public int editar(Pessoa pessoa) throws Exception {
 
 		stmt = con.prepareStatement("UPDATE T_SGE_PESSOA SET NR_TELEFONE=?, DS_ENDERECO=?"
 				+ " WHERE T_SGE_PESSOA=?");
@@ -41,14 +68,28 @@ public String cadastrar(Pessoa pessoa) throws Exception {
 		return stmt.executeUpdate();
 	}
 
-	//CHECAR SE ESTA CERTO
+	/**
+	 * Metodo para remover um registro na tabela T_SGE_PESSOA
+	 * @author Techbot Solutions
+	 * @param codigoUsuario recebe um objeto do tipo int
+	 * @return um int com o numero de itens removidos
+	 * @throws Exception - Chamada da excecao Exception
+	 */
 	public int remover(int cd_usuario) throws Exception {
-		stmt = con.prepareStatement("DELETE FROM T_SGE_PESSOA WHERE CD_USUARIO = ?");
+		stmt = con.prepareStatement("DELETE FROM T_SGE_PESSOA "
+				+ "WHERE T_SGE_PESSOA.CD_USUARIO = ?");
 		stmt.setInt(1, cd_usuario);
 
 		return stmt.executeUpdate();
 	}
 
+	/**
+	 * Metodo que fecha a comunicacao com o banco de dados
+	 * @author Techbot Solutions
+	 * @param nao possui parametros
+	 * @return nao ha retorno
+	 * @throws Exception - Chamada da excecao Exception
+	 */
 	public void fechar() throws Exception {
 		con.close();
 	}
