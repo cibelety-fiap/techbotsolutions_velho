@@ -12,15 +12,15 @@ import br.com.fiap.speventos.beans.RealizacaoEvento;
 import br.com.fiap.speventos.conexao.Conexao;
 
 /**
- * Classe para manipular a tabela T_SGE_REALIZACAO_EVENTO 
- * Possui métodos para: cadastrar, consultarPorCodigo, consultarPorNomeEvento, editar, remover
+ * Classe para manipular a tabela T_SGE_REALIZACAO_EVENTO
+ * Possui metodos para: cadastrar, consultarPorCodigo, consultarPorNomeEvento, 
+ * editar, remover, fechar conexao.
  * @author Techbot Solutions
  * @version 1.0
  * @since 1.0
- * @see RealizacaoEventoBO
  * @see RealizacaoEvento
+ * @see RealizacaoEventoBO
  */
-
 public class RealizacaoEventoDAO {
 
 	private Connection con;
@@ -28,23 +28,23 @@ public class RealizacaoEventoDAO {
 	private ResultSet rs;
 
 	/**
-	 * Método construtor que estabelece a comunicação com o banco de dados
-	 * @author Techbot Solutions
-	 * @param não possui parâmetros
-	 * @return não há retorno
-	 * @throws Exception - Chamada da exceção checked SQLException
-	 */
+	  * Metodo construtor que estabelece a comunicacao com o banco de dados
+	  * @author Techbot Solutions
+	  * @param nao possui parametros
+	  * @return nao ha retorno
+	  * @throws Exception - Chamada da excecao Exception
+	  */	
 	public RealizacaoEventoDAO() throws Exception {
 		con = new Conexao().conectar();
 	}
 
 	/**
-	 * Método para adicionar um registro na tabela T_DDD_CLIENTE
-	 * @author Techbot Solutions
-	 * @param realizacaoEvento recebe um objeto do tipo RealizacaoEvento (Beans)
-	 * @return um int com a quantidade de registros inseridos
-	 * @throws Exception Chamada da exceção Exception (completar??)
-	 */
+	  * Metodo para adicionar um registro na tabela T_SGE_REALIZACAO_EVENTO
+	  * @author Techbot Solutions
+	  * @param realizacaoEvento recebe um objeto do tipo RealizacaoEvento (Beans)
+	  * @return um int com a quantidade de registros inseridos
+	  * @throws Exception - Chamada da excecao Exception
+	  */
 	public int cadastrar(RealizacaoEvento realizacaoEvento) throws Exception {
 		stmt = con.prepareStatement("INSERT INTO T_SGE_REALIZACAO_EVENTO "
 				+ "(CD_REALIZ_EVENTO, CD_EVENTO, CD_LOCAL, DT_HR_INICIO, DT_HR_TERMINO) " 
@@ -56,11 +56,17 @@ public class RealizacaoEventoDAO {
 		stmt.setString(4, realizacaoEvento.getDataHoraInicio());
 		stmt.setString(5, realizacaoEvento.getDataHoraTermino());
 
-		
-
 		return stmt.executeUpdate();
 	}
 
+	/**
+	  * Metodo para consultar por codigo da realizacao do evento
+	  * um registro na tabela T_SGE_REALIZACAO_EVENTO
+	  * @author Techbot Solutions
+	  * @param codRealizEvento recebe um objeto do tipo int
+	  * @return um objeto do tipo RealizacaoEvento
+	  * @throws Exception - Chamada da excecao Exception
+	  */
 	public RealizacaoEvento consultarPorCodigo(int codRealizEvento) throws Exception {
 		stmt = con.prepareStatement("SELECT T_SGE_REALIZACAO_EVENTO.CD_REALIZ_EVENTO, "
 				+ "T_SGE_REALIZACAO_EVENTO.CD_EVENTO, T_SGE_REALIZACAO_EVENTO.CD_LOCAL, "
@@ -69,28 +75,42 @@ public class RealizacaoEventoDAO {
 				+ "T_SGE_EVENTO.DS_LINK_IMAGEM, T_SGE_EVENTO.NM_EVENTO, T_SGE_EVENTO.DS_TIPO_EVENTO, "
 				+ "T_SGE_EVENTO.DS_SUBTIPO_EVENTO, T_SGE_EVENTO.DS_EVENTO, " 
 				+ "T_SGE_EVENTO.DS_CONTATO_MAIS_INFO, T_SGE_LOCAL.NM_LOCAL, T_SGE_LOCAL.DS_ENDERECO "
-				+ "FROM T_SGE_REALIZACAO_EVENTO " + "INNER JOIN T_SGE_EVENTO ON "
-				+ "(T_SGE_REALIZACAO_EVENTO.CD_EVENTO=T_SGE_EVENTO.CD_EVENTO) " + "INNER JOIN T_SGE_LOCAL ON "
-				+ "(T_SGE_REALIZACAO_EVENTO.CD_LOCAL=T_SGE_LOCAL.CD_LOCAL) " + "WHERE CD_REALIZ_EVENTO=?");
+				+ "FROM T_SGE_REALIZACAO_EVENTO " 
+				+ "INNER JOIN T_SGE_EVENTO ON "
+				+ "(T_SGE_REALIZACAO_EVENTO.CD_EVENTO=T_SGE_EVENTO.CD_EVENTO) " 
+				+ "INNER JOIN T_SGE_LOCAL ON "
+				+ "(T_SGE_REALIZACAO_EVENTO.CD_LOCAL=T_SGE_LOCAL.CD_LOCAL) " 
+				+ "WHERE CD_REALIZ_EVENTO=?");
 
 		stmt.setInt(1, codRealizEvento);
 
 		rs = stmt.executeQuery();
 
 		if (rs.next()) {
-			return new RealizacaoEvento(rs.getInt("CD_REALIZ_EVENTO"),
+			return new RealizacaoEvento(
+					rs.getInt("CD_REALIZ_EVENTO"),
 					new Evento(rs.getInt("CD_EVENTO"), rs.getString("DS_LINK_IMAGEM"), rs.getString("NM_EVENTO"),
 							rs.getString("DS_TIPO_EVENTO"), rs.getString("DS_SUBTIPO_EVENTO"),
 							rs.getString("DS_EVENTO"), rs.getString("DS_CONTATO_MAIS_INFO")),
-					new Local(rs.getInt("CD_LOCAL"), rs.getString("NM_LOCAL"), rs.getString("DS_ENDERECO")),
+					new Local(
+							rs.getInt("CD_LOCAL"), rs.getString("NM_LOCAL"), rs.getString("DS_ENDERECO")),
 					rs.getString("DT_HR_INICIO"), rs.getString("DT_HR_TERMINO"));
 		} else {
 			return new RealizacaoEvento();
 		}
 	}
 
+	/**
+	  * Metodo para consultar por nome do evento
+	  * um registro na tabela T_SGE_REALIZACAO_EVENTO
+	  * @author Techbot Solutions
+	  * @param nomeEvento recebe um objeto do tipo String
+	  * @return uma lista com objetos do tipo RealizacaoEvento
+	  * @throws Exception - Chamada da excecao Exception
+	  */
 	public List<RealizacaoEvento> consultarPorNomeEvento(String nomeEvento) throws Exception {
 		List<RealizacaoEvento> listaRealizEvento = new ArrayList<RealizacaoEvento>();
+		
 		stmt = con.prepareStatement("SELECT T_SGE_REALIZACAO_EVENTO.CD_REALIZ_EVENTO, "
 								+ "T_SGE_REALIZACAO_EVENTO.CD_EVENTO, T_SGE_REALIZACAO_EVENTO.CD_LOCAL, " 
 								+ "TO_CHAR(T_SGE_REALIZACAO_EVENTO.DT_HR_INICIO,'DD/MM/YYYY HH24:MI') \"DT_HR_INICIO\", "  
@@ -98,32 +118,39 @@ public class RealizacaoEventoDAO {
 								+ "T_SGE_EVENTO.DS_LINK_IMAGEM, T_SGE_EVENTO.NM_EVENTO, T_SGE_EVENTO.DS_TIPO_EVENTO, " 
 								+ "T_SGE_EVENTO.DS_SUBTIPO_EVENTO, T_SGE_EVENTO.DS_EVENTO, " 
 								+ "T_SGE_EVENTO.DS_CONTATO_MAIS_INFO, T_SGE_LOCAL.NM_LOCAL, T_SGE_LOCAL.DS_ENDERECO "
-				+ "FROM T_SGE_REALIZACAO_EVENTO " 
-				+ "INNER JOIN T_SGE_EVENTO ON "
-				+ "(T_SGE_REALIZACAO_EVENTO.CD_EVENTO=T_SGE_EVENTO.CD_EVENTO) " 
-				+ "INNER JOIN T_SGE_LOCAL ON "
-				+ "(T_SGE_REALIZACAO_EVENTO.CD_LOCAL=T_SGE_LOCAL.CD_LOCAL) " 
-				+ "WHERE T_SGE_EVENTO.NM_EVENTO LIKE ?");
+								+ "FROM T_SGE_REALIZACAO_EVENTO " 
+								+ "INNER JOIN T_SGE_EVENTO ON "
+								+ "(T_SGE_REALIZACAO_EVENTO.CD_EVENTO=T_SGE_EVENTO.CD_EVENTO) " 
+								+ "INNER JOIN T_SGE_LOCAL ON "
+								+ "(T_SGE_REALIZACAO_EVENTO.CD_LOCAL=T_SGE_LOCAL.CD_LOCAL) " 
+								+ "WHERE T_SGE_EVENTO.NM_EVENTO LIKE ?");
 
 		stmt.setString(1, "%" + nomeEvento + "%");
 
 		rs = stmt.executeQuery();
 
 		while (rs.next()) {
-			listaRealizEvento.add(new RealizacaoEvento(rs.getInt("CD_REALIZ_EVENTO"),
+			listaRealizEvento.add(new RealizacaoEvento(
+					rs.getInt("CD_REALIZ_EVENTO"),
 					new Evento(rs.getInt("CD_EVENTO"), rs.getString("DS_LINK_IMAGEM"), rs.getString("NM_EVENTO"),
 							rs.getString("DS_TIPO_EVENTO"), rs.getString("DS_SUBTIPO_EVENTO"),
 							rs.getString("DS_EVENTO"), rs.getString("DS_CONTATO_MAIS_INFO")),
-					new Local(rs.getInt("CD_LOCAL"), rs.getString("NM_LOCAL"), rs.getString("DS_ENDERECO")),
+					new Local(
+							rs.getInt("CD_LOCAL"), rs.getString("NM_LOCAL"), rs.getString("DS_ENDERECO")),
 					rs.getString("DT_HR_INICIO"), rs.getString("DT_HR_TERMINO")));
 		}
 
 		return listaRealizEvento;
 	}
 
-
+	/**
+	  * Metodo para editar um registro na tabela T_SGE_REALIZACAO_EVENTO
+	  * @author Techbot Solutions
+	  * @param realizacaoEvento recebe um objeto do tipo RealizacaoEvento
+	  * @return um int com a quantidade de registros editados
+	  * @throws Exception - Chamada da excecao Exception
+	  */
 	public int editar(RealizacaoEvento realizacaoEvento) throws Exception {
-		//REVER QUERY
 		stmt = con.prepareStatement("UPDATE T_SGE_REALIZACAO_EVENTO "
 				+ "SET CD_REALIZ_EVENTO=?, CD_EVENTO=?, CD_LOCAL=?, "
 				+ "DT_HR_INICIO =?, DT_HR_TERMINO=? " 
@@ -139,6 +166,13 @@ public class RealizacaoEventoDAO {
 		return stmt.executeUpdate();
 	}
 
+	/**
+	  * Metodo para remover um registro na tabela T_SGE_REALIZACAO_EVENTO
+	  * @author Techbot Solutions
+	  * @param codRealizEvento recebe um objeto do tipo int
+	  * @return um int com o numero de itens removidos
+	  * @throws Exception - Chamada da excecao Exception
+	  */	
 	public int remover(int codRealizEvento) throws Exception {
 
 		stmt = con.prepareStatement("DELETE FROM T_SGE_REALIZACAO_EVENTO " 
@@ -148,6 +182,13 @@ public class RealizacaoEventoDAO {
 		return stmt.executeUpdate();
 	}
 	
+	/**
+	  * Metodo que fecha a comunicacao com o banco de dados
+	  * @author Techbot Solutions
+	  * @param nao possui parametros
+	  * @return nao ha retorno
+	  * @throws Exception - Chamada da excecao Exception
+	  */	
 	public void fechar() throws Exception{
 		con.close();
 	}

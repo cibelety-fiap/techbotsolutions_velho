@@ -1,7 +1,6 @@
 package br.com.fiap.speventos.web;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -134,6 +133,7 @@ public class MessageServlet extends HttpServlet {
 			respostasFormatadas = respostasFormatadas + resposta;
 		}
 		respostasFormatadas = "[\"" +respostasFormatadas + "\"]";
+		dao.fechar();
 		return respostasFormatadas;
 	}
 
