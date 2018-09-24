@@ -6,12 +6,9 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
-import br.com.fiap.speventos.beans.AtualizacaoEvento;
 import br.com.fiap.speventos.beans.AtualizacaoNoticia;
 import br.com.fiap.speventos.beans.Colaborador;
-import br.com.fiap.speventos.beans.Evento;
 import br.com.fiap.speventos.beans.Noticia;
-import br.com.fiap.speventos.beans.Usuario;
 import br.com.fiap.speventos.conexao.Conexao;
 
 
@@ -65,7 +62,8 @@ public class AtualizacaoNoticiaDAO {
 	}
 	
 	/**
-	  * Metodo para consultar por codigo um registro na tabela T_SGE_ATUALIZACAO_NOTICIA
+	  * Metodo para consultar por codigo da atualizacao da noticia
+	  * um registro na tabela T_SGE_ATUALIZACAO_NOTICIA
 	  * @author Techbot Solutions
 	  * @param codigoAtualizacaoNoticia recebe um objeto do tipo int
 	  * @return um objeto AtualizacaoNoticia
@@ -173,13 +171,12 @@ public class AtualizacaoNoticiaDAO {
 	}
 	
 	/**
-	  * Metodo construtor que fecha a comunicacao com o banco de dados
+	  * Metodo que fecha a comunicacao com o banco de dados
 	  * @author Techbot Solutions
 	  * @param nao possui parametros
 	  * @return nao ha retorno
-	  * @throws Exception - Chamada da excecao checked SQLException
+	  * @throws Exception - Chamada da excecao Exception
 	  */
-
 	public void fechar() throws Exception {
 		con.close();
 	}

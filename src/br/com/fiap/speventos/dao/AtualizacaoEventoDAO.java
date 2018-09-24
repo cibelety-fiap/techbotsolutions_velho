@@ -63,7 +63,8 @@ public class AtualizacaoEventoDAO {
 	}
 	
 	/**
-	  * Metodo para consultar por codigo um registro na tabela T_SGE_ATUALIZACAO_EVENTO
+	  * Metodo para consultar por codigo da atualizacao do evento 
+	  * um registro na tabela T_SGE_ATUALIZACAO_EVENTO
 	  * @author Techbot Solutions
 	  * @param codigoAtualizacaoEvento recebe um objeto do tipo int
 	  * @return um objeto AtualizacaoEvento
